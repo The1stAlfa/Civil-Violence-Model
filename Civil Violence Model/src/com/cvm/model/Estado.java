@@ -9,6 +9,7 @@ package com.cvm.model;
  *
  * @author ij_le
  */
-public class Agent {
-    
+public enum Estado {
+    ACTIVO,
+    INACTIVO;
 }

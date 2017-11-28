@@ -9,6 +9,7 @@ package com.cvm.model;
  *
  * @author ij_le
  */
-public class Cop {
-    
+public enum Categoria {
+    AGENTE,
+    POLICIA;
 }
