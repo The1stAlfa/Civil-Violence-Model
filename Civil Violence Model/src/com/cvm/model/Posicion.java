@@ -14,7 +14,7 @@ public class Posicion {
     private int fila;
     private int columna;
     
-    Posicion(){      
+    public Posicion(){      
     }
 
     public Posicion(int fila, int columna) {

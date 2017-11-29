@@ -9,24 +9,25 @@ package com.cvm.model;
  *
  * @author ij_le
  */
-public class Agente {
+public class Agente extends Actor{
     private double agravio;
     private Estado estado = Estado.INACTIVO;
     private static final double LIMITE = 0.1;
     private double perjuicio;
-    private Posicion posicion;
     private double riesgoAversion;
     private int vision;
     
-    public Agente() {
+    public Agente(){
+        super(Categoria.AGENTE);
     }
 
     public Agente(double perjuicio, double riesgoAversion, int vision) {
+        super(Categoria.AGENTE);
         this.perjuicio = perjuicio;
         this.riesgoAversion = riesgoAversion;
         this.vision = vision;
     }
-
+    
     public double getAgravio() {
         return agravio;
     }
@@ -37,10 +38,6 @@ public class Agente {
 
     public double getPerjuicio() {
         return perjuicio;
-    }
-
-    public Posicion getPosicion() {
-        return posicion;
     }
 
     public double getRiesgoAversion() {
@@ -61,10 +58,6 @@ public class Agente {
 
     public void setPerjuicio(double perjuicio) {
         this.perjuicio = perjuicio;
-    }
-
-    public void setPosicion(Posicion posicion) {
-        this.posicion = posicion;
     }
 
     public void setRiesgoAversion(double riesgoAversion) {

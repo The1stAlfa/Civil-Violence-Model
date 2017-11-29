@@ -16,7 +16,6 @@ import java.util.List;
 public class Validacion {
     public static boolean validarCoordenada(List<List<Actor>> matriz, 
             Posicion coordenada){
-        
-        return false;
+        return matriz.get(coordenada.getFila()).get(coordenada.getColumna())== null;
     }
 }

@@ -23,11 +23,20 @@ public class Actor {
     public Categoria getCategoria() {
         return categoria;
     }
+    
+    public Posicion getPosicion(){
+        return this.posicion;
+    }
 
     public void movimiento(){
         
     }
+    
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+    
+    public void setPosicion(Posicion posicion){
+        this.posicion = posicion;
     }
 }

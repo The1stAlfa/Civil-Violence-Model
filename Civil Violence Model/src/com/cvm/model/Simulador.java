@@ -44,7 +44,17 @@ public class Simulador {
     }
 
     public void ejecutarSimulacro(){
-        System.out.println("");
+        this.turno += 1;
+        System.out.println("Turno: "+ this.turno + "\n");
+        System.out.println("** Agentes ** Densidad: " + this.densidadAgentes + 
+                "Vision: " + this.visionAgentes + 
+                "-Cantidad- Matriz: " +
+                "Prision: " + "\n" +
+                "** Policias ** Densidad:" + this.densidadPolicias + 
+                "Vision: " + this.visionPolicias + 
+                "-Cantidad- Matriz: " + " \n" + 
+                "Legitimidad del Gobierno: " + this.legitimidad);
+        
     }
     public int getDensidadAgentes() {
         return densidadAgentes;
@@ -91,31 +101,41 @@ public class Simulador {
     }
     
     public void inicializarUniverso(){
-        universo = new Universo(tamanioUniverso[0], tamanioUniverso[1], 
-                obtenerAgentes(this.densidadAgentes), 
-                obtenerPolicias(this.densidadPolicias));
-        universo.colocarAgentes();
-        universo.colocarPolicias();          
+        int filas = tamanioUniverso[0];
+        int columnas = tamanioUniverso[1];
+        float tamanio = (float)(filas * columnas);
+        
+        universo = new Universo(columnas, filas, 
+                obtenerAgentes(this.densidadAgentes, tamanio, 
+                        this.visionAgentes), 
+                obtenerPolicias(this.densidadPolicias, tamanio, 
+                        this.visionPolicias));
+        universo.inicializarMatriz(columnas, filas);
+        universo.colocarAgentes(columnas-1, filas-1, universo.getMatriz(), 
+                universo.getPoblacion());
+        universo.colocarPolicias(columnas-1, filas-1, universo.getMatriz(), 
+                universo.getPolicias());          
     }
     
-    public ArrayList<Agente> obtenerAgentes(int densidad){
+    public ArrayList<Agente> obtenerAgentes(int densidad, float tamanio, 
+            int vision){
         ArrayList<Agente> agentes = new ArrayList<>();
         int numeroDeAgentes = 
-                (int)((float)universo.tamanioMatriz() * (float)densidad/100);
+                (int)((float)tamanio * (float)densidad/100);
         for(int a=0; a<numeroDeAgentes; a++){
-            agentes.add(new Agente(Math.random(), Math.random(), 
-                    this.visionAgentes));
+            agentes.add(new Agente(Math.random(), Math.random(), vision));
         }
         
         return agentes;
     }
     
-    public ArrayList<Policia> obtenerPolicias(int densidad){
+    public ArrayList<Policia> obtenerPolicias(int densidad, float tamanio,
+            int vision){
         ArrayList<Policia> policias = new ArrayList<>();
         int numeroDeAgentes = 
-                (int)((float)universo.tamanioMatriz() * (float)densidad/100);
+                (int)((float)tamanio * (float)densidad/100);
         for(int a=0; a<numeroDeAgentes; a++)
-            policias.add(new Policia(this.visionPolicias));
+            policias.add(new Policia(vision));
         
         return policias;
     }

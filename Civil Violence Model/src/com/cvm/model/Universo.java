@@ -6,6 +6,7 @@
 package com.cvm.model;
 
 import com.cvm.util.Aleatorio;
+import com.cvm.util.Validacion;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class Universo {
         this.columnas = columnas;
         this.filas = filas;
     }
+    
     public Universo(int columnas, int filas, ArrayList<Agente> poblacion, 
             ArrayList<Policia> policias) {
         this.columnas = columnas;
@@ -35,15 +37,32 @@ public class Universo {
         this.policias = policias;
     }
     
-    public void colocarAgentes(){
+    public void colocarAgentes(int columnas, int filas, 
+            List<List<Actor>> matriz, ArrayList<Agente> poblacion){
         Posicion coordenada = new Posicion();
+        
         for(int i=0; i<poblacion.size(); i++){
-            coordenada = Aleatorio.posicionAleatoria(filas, columnas);
+            do{
+                coordenada = Aleatorio.posicionAleatoria(filas, columnas);
+            }while(!Validacion.validarCoordenada(matriz, coordenada));
+            poblacion.get(i).setPosicion(coordenada);
+            matriz.get(coordenada.getFila()).set(
+                    coordenada.getColumna(), poblacion.get(i));
         }
     }
     
-    public void colocarPolicias(){
+    public void colocarPolicias(int columnas, int filas, 
+            List<List<Actor>> matriz, ArrayList<Policia> policias){
+        Posicion coordenada = new Posicion();
         
+        for(int i=0; i<policias.size(); i++){
+            do{
+                coordenada = Aleatorio.posicionAleatoria(filas, columnas);
+            }while(!Validacion.validarCoordenada(matriz, coordenada));
+            policias.get(i).setPosicion(coordenada);
+            matriz.get(coordenada.getFila()).set(
+                    coordenada.getColumna(), policias.get(i));
+        }
     }
     
     public int getColumnas() {
@@ -66,11 +85,11 @@ public class Universo {
         return policias;
     }
     
-    public void inicializarMatriz(){
+    public void inicializarMatriz(int columnas, int filas){
         matriz = new ArrayList<List<Actor>>();
-        for(int i=0; i<this.columnas; i++){
+        for(int i=0; i<filas; i++){
             matriz.add(new ArrayList<Actor>());
-            for(int j=0; j<this.filas; j++){
+            for(int j=0; j<columnas; j++){
                 matriz.get(i).add(null);
             }
         }

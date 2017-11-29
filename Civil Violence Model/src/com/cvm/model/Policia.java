@@ -9,13 +9,15 @@ package com.cvm.model;
  *
  * @author ij_le
  */
-public class Policia {
+public class Policia extends Actor{
     private int vision;
     
     public Policia(){
+        super(Categoria.POLICIA);
     }
 
     public Policia(int vision) {
+        super(Categoria.POLICIA);
         this.vision = vision;
     }
     
