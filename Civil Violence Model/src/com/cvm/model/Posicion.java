@@ -11,30 +11,30 @@ package com.cvm.model;
  */
 
 public class Posicion {
-    private byte fila;
-    private byte columna;
+    private int fila;
+    private int columna;
     
     Posicion(){      
     }
 
-    public Posicion(byte fila, byte columna) {
+    public Posicion(int fila, int columna) {
         this.fila = fila;
         this.columna = columna;
     }
 
-    public byte getColumna() {
+    public int getColumna() {
         return columna;
     }   
   
-    public byte getFila() {
+    public int getFila() {
         return fila;
     }
     
-    public void setColumn(byte columna) {
+    public void setColumn(int columna) {
         this.columna = columna;
     }
 
-    public void setFila(byte fila) {
+    public void setFila(int fila) {
         this.fila = fila;
     }
 

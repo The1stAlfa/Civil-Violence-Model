@@ -5,6 +5,7 @@
  */
 package com.cvm.model;
 
+import com.cvm.util.Aleatorio;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,10 @@ public class Universo {
     public Universo() {
     }
 
+    public Universo(int columnas, int filas){
+        this.columnas = columnas;
+        this.filas = filas;
+    }
     public Universo(int columnas, int filas, ArrayList<Agente> poblacion, 
             ArrayList<Policia> policias) {
         this.columnas = columnas;
@@ -29,7 +34,18 @@ public class Universo {
         this.poblacion = poblacion;
         this.policias = policias;
     }
-
+    
+    public void colocarAgentes(){
+        Posicion coordenada = new Posicion();
+        for(int i=0; i<poblacion.size(); i++){
+            coordenada = Aleatorio.posicionAleatoria(filas, columnas);
+        }
+    }
+    
+    public void colocarPolicias(){
+        
+    }
+    
     public int getColumnas() {
         return columnas;
     }
@@ -48,6 +64,16 @@ public class Universo {
 
     public ArrayList<Policia> getPolicias() {
         return policias;
+    }
+    
+    public void inicializarMatriz(){
+        matriz = new ArrayList<List<Actor>>();
+        for(int i=0; i<this.columnas; i++){
+            matriz.add(new ArrayList<Actor>());
+            for(int j=0; j<this.filas; j++){
+                matriz.get(i).add(null);
+            }
+        }
     }
     
     public void imprimirMatriz(){
@@ -73,4 +99,8 @@ public class Universo {
     public void setPolicias(ArrayList<Policia> policias) {
         this.policias = policias;
     }  
+    
+    public int tamanioMatriz(){
+        return this.filas * this.columnas;
+    }
 }

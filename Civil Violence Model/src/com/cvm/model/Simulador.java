@@ -5,6 +5,8 @@
  */
 package com.cvm.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ij_le
@@ -14,7 +16,7 @@ public class Simulador {
     private int densidadPolicias;
     protected double legitimidad;
     private int maxTurnosPrision;
-    private int maxTurnosSimulacion;
+    private int turnosSimulacion;
     protected Prision prision;
     private int[] tamanioUniverso;
     private int turno;    
@@ -27,19 +29,23 @@ public class Simulador {
     }
     
     public Simulador(int densidadAgentes, int densidadPolicias, 
-            double legitimidad, int maxTurnosPrision, int maxTurnosSimulacion,
-            int[] tamanioUniverso, int visionAgentes, int visionPolicias ){
+            double legitimidad, int maxTurnosPrision, int[] tamanioUniverso,
+            int turnosSimulacion, int visionAgentes, int visionPolicias){
        
         this.densidadAgentes = densidadAgentes;
         this.densidadPolicias = densidadPolicias;
         this.legitimidad = legitimidad;
         this.maxTurnosPrision = maxTurnosPrision;
-        this.maxTurnosSimulacion = maxTurnosSimulacion;
         this.tamanioUniverso = tamanioUniverso;
+        this.turnosSimulacion = turnosSimulacion;
         this.visionAgentes = visionAgentes;
-        this.visionPolicias = visionPolicias;  
+        this.visionPolicias = visionPolicias;
+        inicializarUniverso();
     }
 
+    public void ejecutarSimulacro(){
+        System.out.println("");
+    }
     public int getDensidadAgentes() {
         return densidadAgentes;
     }
@@ -56,8 +62,8 @@ public class Simulador {
         return maxTurnosPrision;
     }
 
-    public int getMaxTurnosSimulacion() {
-        return maxTurnosSimulacion;
+    public int getTurnosSimulacion() {
+        return turnosSimulacion;
     }
 
     public Prision getPrision() {
@@ -83,7 +89,37 @@ public class Simulador {
     public int getVisionPolicias() {
         return visionPolicias;
     }
-
+    
+    public void inicializarUniverso(){
+        universo = new Universo(tamanioUniverso[0], tamanioUniverso[1], 
+                obtenerAgentes(this.densidadAgentes), 
+                obtenerPolicias(this.densidadPolicias));
+        universo.colocarAgentes();
+        universo.colocarPolicias();          
+    }
+    
+    public ArrayList<Agente> obtenerAgentes(int densidad){
+        ArrayList<Agente> agentes = new ArrayList<>();
+        int numeroDeAgentes = 
+                (int)((float)universo.tamanioMatriz() * (float)densidad/100);
+        for(int a=0; a<numeroDeAgentes; a++){
+            agentes.add(new Agente(Math.random(), Math.random(), 
+                    this.visionAgentes));
+        }
+        
+        return agentes;
+    }
+    
+    public ArrayList<Policia> obtenerPolicias(int densidad){
+        ArrayList<Policia> policias = new ArrayList<>();
+        int numeroDeAgentes = 
+                (int)((float)universo.tamanioMatriz() * (float)densidad/100);
+        for(int a=0; a<numeroDeAgentes; a++)
+            policias.add(new Policia(this.visionPolicias));
+        
+        return policias;
+    }
+    
     public void setDensidadAgentes(int densidadAgentes) {
         this.densidadAgentes = densidadAgentes;
     }
@@ -100,8 +136,8 @@ public class Simulador {
         this.maxTurnosPrision = maxTurnosPrision;
     }
 
-    public void setMaxTurnosSimulacion(int maxTurnosSimulacion) {
-        this.maxTurnosSimulacion = maxTurnosSimulacion;
+    public void setTurnosSimulacion(int turnosSimulacion) {
+        this.turnosSimulacion = turnosSimulacion;
     }
 
     public void setPrision(Prision prision) {
