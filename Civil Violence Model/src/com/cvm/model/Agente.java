@@ -5,6 +5,7 @@
  */
 package com.cvm.model;
 
+import java.util.List;
 /**
  *
  * @author ij_le
@@ -27,6 +28,57 @@ public class Agente extends Actor{
         this.riesgoAversion = riesgoAversion;
     }
     
+    public void actuar(int columnas, int filas, double legitimidad, 
+            List<List<Actor>> matriz){
+        double riesgoNeto = calcularRiesgoNeto(columnas, filas, matriz);
+        this.agravio = calcularAgravio(legitimidad);
+        
+        // REGLA DE AGENTE AGRAVIO - RIESGO NETO > LIMITE : ACTIVO
+        if(agravio - riesgoNeto > LIMITE){
+            if(this.estado.equals(Estado.INACTIVO))
+                cambiarEstado();
+        }
+        else{
+            if(this.estado.equals(Estado.ACTIVO))
+                cambiarEstado();
+        }
+    }
+    
+    private double calcularAgravio(double legitimidad){
+        return this.perjuicio * (1.0 - legitimidad);
+    }
+    
+    private double calcularProbabilidadArresto(int columnas, int filas, 
+            List<List<Actor>> matriz){
+        double k = 2.3;
+        double ratio = calcularRatioPoliciaAgente(columnas, filas, matriz);
+        
+        return 1.0 - Math.exp(-k * ratio);
+    }
+    
+    private double calcularRatioPoliciaAgente(int columnas, int filas, 
+            List<List<Actor>> matriz){
+        double numeroAgentes = (double) inspeccionar(Categoria.AGENTE, columnas,
+                filas, matriz, this.getPosicion()).size();
+        double numeroPolicias = (double) inspeccionar(Categoria.POLICIA, columnas,
+                filas, matriz, this.getPosicion()).size();
+        
+        return numeroPolicias / numeroAgentes;
+    }
+    
+    private double calcularRiesgoNeto(int columnas, int filas, 
+            List<List<Actor>> matriz){
+        return this.riesgoAversion * calcularProbabilidadArresto(columnas, 
+                filas, matriz);
+    }
+    
+    public void cambiarEstado(){
+        if(this.estado.equals(Estado.ACTIVO))
+            this.estado = Estado.INACTIVO;
+        else
+            this.estado = Estado.ACTIVO;
+    }
+    
     public double getAgravio() {
         return agravio;
     }
@@ -45,10 +97,6 @@ public class Agente extends Actor{
 
     public double getRiesgoAversion() {
         return riesgoAversion;
-    }
-    
-    public void actuar(){
-        
     }
 
     public void setAgravio(double agravio) {

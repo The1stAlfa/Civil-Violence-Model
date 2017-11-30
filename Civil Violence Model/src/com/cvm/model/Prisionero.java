@@ -22,6 +22,10 @@ public class Prisionero {
         this.agente = agente;
         this.condena = condena;
     }
+    
+    public void aumentarTurnoEnPrision(){
+        this.turnosEnPrision += 1;
+    }
 
     public Agente getAgente() {
         return agente;

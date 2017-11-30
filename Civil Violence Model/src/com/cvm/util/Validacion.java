@@ -17,6 +17,7 @@ import java.util.List;
  * @author ij_le
  */
 public class Validacion {
+    
     public static int validarCoordenada(List<List<Actor>> matriz, 
             Posicion coordenada){
         try{

@@ -17,7 +17,7 @@ public class Simulador {
     protected double legitimidad;
     private int maxTurnosPrision;
     private int turnosSimulacion;
-    protected Prision prision;
+    protected static Prision prision;
     private int[] tamanioUniverso;
     private int turno;    
     protected Universo universo;
@@ -36,6 +36,7 @@ public class Simulador {
         this.densidadPolicias = densidadPolicias;
         this.legitimidad = legitimidad;
         this.maxTurnosPrision = maxTurnosPrision;
+        this.prision = new Prision();
         this.tamanioUniverso = tamanioUniverso;
         this.turnosSimulacion = turnosSimulacion;
         this.visionAgentes = visionAgentes;
@@ -55,15 +56,19 @@ public class Simulador {
                 "Vision: " + this.visionPolicias + 
                 "-Cantidad- Matriz: " + " \n" + 
                 "Legitimidad del Gobierno: " + this.legitimidad);
+        prision.actualizarTurnoEnPrision();
+        prision.liberarPrisioneros(universo.getMatriz());
         do{
             actor = universo.seleccionarActor(universo.obtenerActores(
                     universo.getPoblacion(), universo.getPolicias()));
         }while(!actor.movimiento(universo.getColumnas(), universo.getFilas(), 
                 universo.getMatriz()));
         if(actor.getCategoria().equals(Categoria.AGENTE))
-            ((Agente)actor).actuar();  
+            ((Agente)actor).actuar(universo.getColumnas(), universo.getFilas(), 
+                    legitimidad, universo.getMatriz());  
         else
-            ((Policia)actor).actuar();
+            ((Policia)actor).actuar(universo.getColumnas(), universo.getFilas(),
+                    universo.getMatriz(), maxTurnosPrision, prision);
         
     }
     
@@ -194,7 +199,4 @@ public class Simulador {
     public void setVisionPolicias(int visionPolicias) {
         this.visionPolicias = visionPolicias;
     }
-    
-    
-    
 }
