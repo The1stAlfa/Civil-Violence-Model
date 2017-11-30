@@ -60,12 +60,11 @@ public class Simulador {
                     universo.getPoblacion(), universo.getPolicias()));
         }while(!actor.movimiento(universo.getColumnas(), universo.getFilas(), 
                 universo.getMatriz()));
-        if(actor.getCategoria().equals(Categoria.AGENTE)){
-            
-        }
-        else{
-            
-        }
+        if(actor.getCategoria().equals(Categoria.AGENTE))
+            ((Agente)actor).actuar();  
+        else
+            ((Policia)actor).actuar();
+        
     }
     
     public int getDensidadAgentes() {

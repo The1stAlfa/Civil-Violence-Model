@@ -44,7 +44,7 @@ public class Universo {
         for(int i=0; i<poblacion.size(); i++){
             do{
                 coordenada = Aleatorio.posicionAleatoria(columnas, filas);
-            }while(!Validacion.validarCoordenada(matriz, coordenada));
+            }while(Validacion.validarCoordenada(matriz, coordenada) == 0);
             poblacion.get(i).setPosicion(coordenada);
             matriz.get(coordenada.getFila()).set(
                     coordenada.getColumna(), poblacion.get(i));
@@ -58,7 +58,7 @@ public class Universo {
         for(int i=0; i<policias.size(); i++){
             do{
                 coordenada = Aleatorio.posicionAleatoria(filas, columnas);
-            }while(!Validacion.validarCoordenada(matriz, coordenada));
+            }while(Validacion.validarCoordenada(matriz, coordenada) == 0);
             policias.get(i).setPosicion(coordenada);
             matriz.get(coordenada.getFila()).set(
                     coordenada.getColumna(), policias.get(i));

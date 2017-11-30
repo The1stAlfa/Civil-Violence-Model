@@ -46,6 +46,10 @@ public class Agente extends Actor{
     public double getRiesgoAversion() {
         return riesgoAversion;
     }
+    
+    public void actuar(){
+        
+    }
 
     public void setAgravio(double agravio) {
         this.agravio = agravio;

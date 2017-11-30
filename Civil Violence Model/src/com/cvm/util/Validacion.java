@@ -7,6 +7,7 @@ package com.cvm.util;
 
 import com.cvm.model.Actor;
 import com.cvm.model.Agente;
+import com.cvm.model.Categoria;
 import com.cvm.model.Posicion;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +17,16 @@ import java.util.List;
  * @author ij_le
  */
 public class Validacion {
-    public static boolean validarCoordenada(List<List<Actor>> matriz, 
+    public static int validarCoordenada(List<List<Actor>> matriz, 
             Posicion coordenada){
         try{
-            return matriz.get(coordenada.getFila()).get(
-                    coordenada.getColumna())== null;
+            if(matriz.get(coordenada.getFila()).get(
+                    coordenada.getColumna())== null)
+                return 1;
         }catch(IndexOutOfBoundsException e){
-            return false;
+            return -1;
         }
-        
+        return 0;
     }
     
     public static boolean validarPrisionAgente(Agente agente){
@@ -39,5 +41,27 @@ public class Validacion {
                 return false;
         }
         return true;
+    }
+    
+    public static boolean esAgente(List<List<Actor>> matriz, 
+            Posicion coordenada){
+        int posX = coordenada.getFila();
+        int posY = coordenada.getColumna();
+        Actor actor = matriz.get(posX).get(posY);
+                
+        if(actor.getCategoria().equals(Categoria.AGENTE))
+            return true;
+        return false;
+    }
+    
+    public static boolean esPolicia(List<List<Actor>> matriz, 
+            Posicion coordenada){
+                int posX = coordenada.getFila();
+        int posY = coordenada.getColumna();
+        Actor actor = matriz.get(posX).get(posY);
+        
+        if(actor.getCategoria().equals(Categoria.POLICIA))
+            return true;
+        return false;
     }
 }

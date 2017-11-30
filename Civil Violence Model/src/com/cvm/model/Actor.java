@@ -36,6 +36,7 @@ public class Actor {
         this.posicion = posicion;
         this.vision = vision;
     }
+    
     public Categoria getCategoria() {
         return categoria;
     }
@@ -50,14 +51,19 @@ public class Actor {
     
     public boolean movimiento(int columnas, int filas, List<List<Actor>> matriz){
         ArrayList<Posicion> espacios = 
-                obtenerEspacios(columnas, filas, matriz, posicion);
+                inspeccionar(null, columnas, filas, matriz, posicion);
         
         if(!espacios.isEmpty()){
             int indice = Aleatorio.enteroAleatorio(0, espacios.size()-1);
-            
+            Posicion nuevaPosicion = espacios.get(indice);
+            Posicion anteriorPosicion = this.posicion;
+            this.posicion = nuevaPosicion;
+            matriz.get(nuevaPosicion.getFila()).
+                    set(nuevaPosicion.getColumna(), this);
+            matriz.get(anteriorPosicion.getFila()).
+                    set(anteriorPosicion.getColumna(), null);
             return true;
         }
-            
         return false;
     }
     
@@ -73,108 +79,203 @@ public class Actor {
         this.vision = vision;
     }
     
-    private ArrayList<Posicion> obtenerEspacios(int columnas, int filas, 
-            List<List<Actor>> matriz, Posicion posicion){
+    public ArrayList<Posicion> inspeccionar(Categoria categoria, int columnas,
+            int filas, List<List<Actor>> matriz, Posicion posicion){
         int posX = posicion.getFila();
         int posY = posicion.getColumna();
-        ArrayList<Posicion> espacios = new ArrayList<>();
+        ArrayList<Posicion> posiciones = new ArrayList<>();
         
         if(posX == 0){
             if(posY == 0){
-                inspeccionInferiorDerecha(espacios, matriz, posX, posY);
+                inspeccionInferiorDerecha(categoria, posiciones, matriz,
+                        posX, posY);
             }
             else if(posY == columnas - 1){
-                inspeccionInferiorIzquierda(espacios, matriz, posX, posY);
+                inspeccionInferiorIzquierda(categoria, posiciones, matriz, 
+                        posX, posY);
             }
             else{
-                inspeccionInferiorDerecha(espacios, matriz, posX, posY);
-                inspeccionInferiorIzquierda(espacios, matriz, posX, posY);
+                inspeccionInferiorDerecha(categoria, posiciones, matriz, 
+                        posX, posY);
+                inspeccionInferiorIzquierda(categoria, posiciones, matriz, 
+                        posX, posY);
             }
         }
         else if(posX == filas - 1){
             if(posY == 0){
-                inspeccionSuperiorDerecha(espacios, matriz, posX, posY);
+                inspeccionSuperiorDerecha(categoria, posiciones, matriz, 
+                        posX, posY);
             }
             else if(posY == columnas - 1){
-                inspeccionSuperiorIzquierda(espacios, matriz, posX, posY);
+                inspeccionSuperiorIzquierda(categoria, posiciones, matriz, 
+                        posX, posY);
             }
             else{
-                inspeccionSuperiorDerecha(espacios, matriz, posX, posY);
-                inspeccionSuperiorIzquierda(espacios, matriz, posX, posY);
+                inspeccionSuperiorDerecha(categoria, posiciones, matriz, 
+                        posX, posY);
+                inspeccionSuperiorIzquierda(categoria, posiciones, matriz, 
+                        posX, posY);
             }
         }
         else{
             if(posY == 0){
-                inspeccionSuperiorDerecha(espacios, matriz, posX, posY);
-                inspeccionInferiorDerecha(espacios, matriz, posX, posY);
+                inspeccionSuperiorDerecha(categoria, posiciones, matriz, 
+                        posX, posY);
+                inspeccionInferiorDerecha(categoria, posiciones, matriz, 
+                        posX, posY);
             }
             else if(posY == columnas -1){
-                inspeccionSuperiorIzquierda(espacios, matriz, posX, posY);
-                inspeccionInferiorIzquierda(espacios, matriz, posX, posY);
+                inspeccionSuperiorIzquierda(categoria, posiciones, matriz, 
+                        posX, posY);
+                inspeccionInferiorIzquierda(categoria, posiciones, matriz, 
+                        posX, posY);
             }
             else{
-                inspeccionSuperiorDerecha(espacios, matriz, posX, posY);
-                inspeccionSuperiorIzquierda(espacios, matriz, posX, posY);
-                inspeccionInferiorDerecha(espacios, matriz, posX, posY);
-                inspeccionInferiorIzquierda(espacios, matriz, posX, posY);
+                inspeccionSuperiorDerecha(categoria, posiciones, matriz, 
+                        posX, posY);
+                inspeccionSuperiorIzquierda(categoria, posiciones, matriz, 
+                        posX, posY);
+                inspeccionInferiorDerecha(categoria, posiciones, matriz, 
+                        posX, posY);
+                inspeccionInferiorIzquierda(categoria, posiciones, matriz, 
+                        posX, posY);
             }
         }
-        return espacios;
+        return posiciones;
     }
     
-    private void inspeccionInferiorDerecha(ArrayList<Posicion> espacios, 
-            List<List<Actor>> matriz, int posX, int posY){
+    private void inspeccionInferiorDerecha(Categoria categoria, 
+            ArrayList<Posicion> posiciones,List<List<Actor>> matriz, 
+            int posX, int posY){
         for(int i=posX; i<=posX+vision; i++){
             for(int j=posY; j<=posY+vision; j++){
-                if(posX == i && posY == j)
+                if(posX == i && posY == j && 
+                        (categoria == null || 
+                        categoria.equals(Categoria.POLICIA)))
                     continue;
                 Posicion posicion = new Posicion(j, i);
-                    if(Validacion.validarCoordenada(matriz, posicion)){
-                        if(Validacion.validarPosicion(espacios, posicion))
-                            espacios.add(posicion);
+                if(Categoria.AGENTE.equals(categoria)){
+                    if(Validacion.validarCoordenada(matriz, posicion) == 0){
+                        if(Validacion.esAgente(matriz,posicion) && 
+                                Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
                     }
+                }
+                else if(Categoria.POLICIA.equals(categoria)){
+                    if(Validacion.validarCoordenada(matriz, posicion) == 0){
+                        if(Validacion.esPolicia(matriz,posicion) && 
+                                Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
+                else{
+                    if(Validacion.validarCoordenada(matriz, posicion) == 1){
+                        if(Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
             }
         }
     }
     
-    private void inspeccionInferiorIzquierda(ArrayList<Posicion> espacios, 
-            List<List<Actor>> matriz, int posX, int posY){
+    private void inspeccionInferiorIzquierda(Categoria categoria, 
+            ArrayList<Posicion> posiciones, List<List<Actor>> matriz, 
+            int posX, int posY){
         for(int i=posX; i<=posX+vision; i++){
             for(int j=posY; j>=posY-vision; j--){
-                if(posX == i && posY == j)
+                if(posX == i && posY == j && 
+                        (categoria == null || 
+                        categoria.equals(Categoria.POLICIA)))
                     continue;
                 Posicion posicion = new Posicion(j, i);
-                if(Validacion.validarCoordenada(matriz, posicion))
-                    if(Validacion.validarPosicion(espacios, posicion))
-                            espacios.add(posicion);
+                if(Categoria.AGENTE.equals(categoria)){
+                    if(Validacion.validarCoordenada(matriz, posicion) == 0){
+                        if(Validacion.esAgente(matriz,posicion) && 
+                                Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
+                else if(Categoria.POLICIA.equals(categoria)){
+                    if(Validacion.validarCoordenada(matriz, posicion) == 0){
+                        if(Validacion.esPolicia(matriz,posicion) && 
+                                Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
+                else{
+                    if(Validacion.validarCoordenada(matriz, posicion) == 1){
+                        if(Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
             }
         }
     }
     
-    private void inspeccionSuperiorDerecha(ArrayList<Posicion> espacios, 
-            List<List<Actor>> matriz, int posX, int posY){
+    private void inspeccionSuperiorDerecha(Categoria categoria, 
+            ArrayList<Posicion> posiciones, List<List<Actor>> matriz, 
+            int posX, int posY){
         for(int i=posX; i>=posX-vision; i--){
             for(int j=posY; j<=posY+vision; j++){
-                if(posX == i && posY == j)
+                if(posX == i && posY == j && 
+                        (categoria == null || 
+                        categoria.equals(Categoria.POLICIA)))
                     continue;
                 Posicion posicion = new Posicion(j, i);
-                    if(Validacion.validarCoordenada(matriz, posicion))
-                        if(Validacion.validarPosicion(espacios, posicion))
-                            espacios.add(posicion);
+                if(Categoria.AGENTE.equals(categoria)){
+                    if(Validacion.validarCoordenada(matriz, posicion) == 0){
+                        if(Validacion.esAgente(matriz,posicion) && 
+                                Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
+                else if(Categoria.POLICIA.equals(categoria)){
+                    if(Validacion.validarCoordenada(matriz, posicion) == 0){
+                        if(Validacion.esPolicia(matriz,posicion) && 
+                                Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
+                else{
+                    if(Validacion.validarCoordenada(matriz, posicion) == 1){
+                        if(Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
             }
         }
     }
     
-    private void inspeccionSuperiorIzquierda(ArrayList<Posicion> espacios, 
-            List<List<Actor>> matriz, int posX, int posY){
+    private void inspeccionSuperiorIzquierda(Categoria categoria, 
+            ArrayList<Posicion> posiciones, List<List<Actor>> matriz, 
+            int posX, int posY){
         for(int i=posX; i>=posX-vision; i--){
             for(int j=posY; j>=posY-vision; j--){
-                if(posX == i && posY == j)
+                if(posX == i && posY == j && 
+                        (categoria == null || 
+                        categoria.equals(Categoria.POLICIA)))
                     continue;
                 Posicion posicion = new Posicion(j, i);
-                if(Validacion.validarCoordenada(matriz, posicion))
-                    if(Validacion.validarPosicion(espacios, posicion))
-                            espacios.add(posicion);
+                if(Categoria.AGENTE.equals(categoria)){
+                    if(Validacion.validarCoordenada(matriz, posicion) == 0){
+                        if(Validacion.esAgente(matriz,posicion) && 
+                                Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
+                else if(Categoria.POLICIA.equals(categoria)){
+                    if(Validacion.validarCoordenada(matriz, posicion) == 0){
+                        if(Validacion.esPolicia(matriz,posicion) && 
+                                Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
+                else{
+                    if(Validacion.validarCoordenada(matriz, posicion) == 1){
+                        if(Validacion.validarPosicion(posiciones, posicion))
+                            posiciones.add(posicion);
+                    }
+                }
             }
         }
     }
