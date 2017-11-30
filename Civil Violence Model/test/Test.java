@@ -1,8 +1,8 @@
 
 import com.cvm.model.Actor;
 import com.cvm.model.Agente;
+import com.cvm.model.Categoria;
 import com.cvm.model.Posicion;
-import com.cvm.model.Universo;
 import java.util.ArrayList;
 import com.cvm.util.Aleatorio;
 import com.cvm.util.Validacion;
@@ -20,11 +20,66 @@ import java.util.List;
  */
 public class Test {
     private static List<List<Actor>> matriz = new ArrayList<List<Actor>>();
+    private static int vision = 4;
     
     public static void main(String[] args){
-        inicializarMatriz(3, 2);
+        inicializarMatriz(3, 3);
+        Posicion pos1 = new Posicion(2, 2);
+        Posicion pos2 = new Posicion(1, 1);
+        matriz.get(2).set(2, new Actor(Categoria.AGENTE, pos1, vision));
+        matriz.get(1).set(1, new Actor(Categoria.AGENTE, pos2, vision));
+        ArrayList<Posicion> espacios = obtenerEspacios(3, 3, matriz, pos2);
         colocarAgentes(3-1, 2-1, matriz, obtenerAgentes(56, (float)6, 2));
         
+    }
+    
+    private static ArrayList<Posicion> obtenerEspacios(int columnas, int filas, 
+            List<List<Actor>> matriz, Posicion posicion){
+        int posX = posicion.getFila();
+        int posY = posicion.getColumna();
+        ArrayList<Posicion> espacios = new ArrayList<>();
+        
+        if(posX == 0){
+            if(posY == 0){
+                inspeccionInferiorDerecha(espacios, matriz, posX, posY);
+            }
+            else if(posY == columnas - 1){
+                inspeccionInferiorIzquierda(espacios, matriz, posX, posY);
+            }
+            else{
+                inspeccionInferiorDerecha(espacios, matriz, posX, posY);
+                inspeccionInferiorIzquierda(espacios, matriz, posX, posY);
+            }
+        }
+        else if(posX == filas - 1){
+            if(posY == 0){
+                inspeccionSuperiorDerecha(espacios, matriz, posX, posY);
+            }
+            else if(posY == columnas - 1){
+                inspeccionSuperiorIzquierda(espacios, matriz, posX, posY);
+            }
+            else{
+                inspeccionSuperiorDerecha(espacios, matriz, posX, posY);
+                inspeccionSuperiorIzquierda(espacios, matriz, posX, posY);
+            }
+        }
+        else{
+            if(posY == 0){
+                inspeccionSuperiorDerecha(espacios, matriz, posX, posY);
+                inspeccionInferiorDerecha(espacios, matriz, posX, posY);
+            }
+            else if(posY == columnas -1){
+                inspeccionSuperiorIzquierda(espacios, matriz, posX, posY);
+                inspeccionInferiorIzquierda(espacios, matriz, posX, posY);
+            }
+            else{
+                inspeccionSuperiorDerecha(espacios, matriz, posX, posY);
+                inspeccionSuperiorIzquierda(espacios, matriz, posX, posY);
+                inspeccionInferiorDerecha(espacios, matriz, posX, posY);
+                inspeccionInferiorIzquierda(espacios, matriz, posX, posY);
+            }
+        }
+        return espacios;
     }
     
     public static void inicializarMatriz(int columnas, int filas){
@@ -78,5 +133,62 @@ public class Test {
         }
         for(int a=0; a<numeroDeAgentes; a++)
             System.out.println(agentes.get(a).getPerjuicio()+ "+" + agentes.get(a).getRiesgoAversion());
+    }
+    
+    private static void inspeccionInferiorDerecha(ArrayList<Posicion> espacios, 
+            List<List<Actor>> matriz, int posX, int posY){
+        for(int i=posX; i<=posX+vision; i++){
+            for(int j=posY; j<=posY+vision; j++){
+                if(posX == i && posY == j)
+                    continue;
+                Posicion posicion = new Posicion(j, i);
+                    if(Validacion.validarCoordenada(matriz, posicion)){
+                        if(Validacion.validarPosicion(espacios, posicion))
+                            espacios.add(posicion);
+                    }
+            }
+        }
+    }
+    
+    private static void inspeccionInferiorIzquierda(ArrayList<Posicion> espacios, 
+            List<List<Actor>> matriz, int posX, int posY){
+        for(int i=posX; i<=posX+vision; i++){
+            for(int j=posY; j>=posY-vision; j--){
+                if(posX == i && posY == j)
+                    continue;
+                Posicion posicion = new Posicion(j, i);
+                if(Validacion.validarCoordenada(matriz, posicion))
+                    if(Validacion.validarPosicion(espacios, posicion))
+                            espacios.add(posicion);
+            }
+        }
+    }
+    
+    private static void inspeccionSuperiorDerecha(ArrayList<Posicion> espacios, 
+            List<List<Actor>> matriz, int posX, int posY){
+        for(int i=posX; i>=posX-vision; i--){
+            for(int j=posY; j<=posY+vision; j++){
+                if(posX == i && posY == j)
+                    continue;
+                Posicion posicion = new Posicion(j, i);
+                    if(Validacion.validarCoordenada(matriz, posicion))
+                        if(Validacion.validarPosicion(espacios, posicion))
+                            espacios.add(posicion);
+            }
+        }
+    }
+    
+    private static void inspeccionSuperiorIzquierda(ArrayList<Posicion> espacios, 
+            List<List<Actor>> matriz, int posX, int posY){
+        for(int i=posX; i>=posX-vision; i--){
+            for(int j=posY; j>=posY-vision; j--){
+                if(posX == i && posY == j)
+                    continue;
+                Posicion posicion = new Posicion(j, i);
+                if(Validacion.validarCoordenada(matriz, posicion))
+                    if(Validacion.validarPosicion(espacios, posicion))
+                            espacios.add(posicion);
+            }
+        }
     }
 } 

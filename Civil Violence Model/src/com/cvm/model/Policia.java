@@ -10,15 +10,13 @@ package com.cvm.model;
  * @author ij_le
  */
 public class Policia extends Actor{
-    private int vision;
     
     public Policia(){
         super(Categoria.POLICIA);
     }
 
     public Policia(int vision) {
-        super(Categoria.POLICIA);
-        this.vision = vision;
+        super(Categoria.POLICIA, vision);
     }
     
     public void actuar(){
@@ -27,10 +25,6 @@ public class Policia extends Actor{
     
     public void arrestarAgente(){
         
-    }
-
-    public int getVision() {
-        return vision;
     }
     
     public void inspeccionarVecindario(){

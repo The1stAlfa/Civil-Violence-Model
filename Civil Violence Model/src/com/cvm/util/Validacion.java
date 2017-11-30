@@ -6,7 +6,9 @@
 package com.cvm.util;
 
 import com.cvm.model.Actor;
+import com.cvm.model.Agente;
 import com.cvm.model.Posicion;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +18,26 @@ import java.util.List;
 public class Validacion {
     public static boolean validarCoordenada(List<List<Actor>> matriz, 
             Posicion coordenada){
-        return matriz.get(coordenada.getFila()).get(coordenada.getColumna())== null;
+        try{
+            return matriz.get(coordenada.getFila()).get(
+                    coordenada.getColumna())== null;
+        }catch(IndexOutOfBoundsException e){
+            return false;
+        }
+        
+    }
+    
+    public static boolean validarPrisionAgente(Agente agente){
+        return agente.getEstaEnPrision();
+    }
+    
+    public static boolean validarPosicion(ArrayList<Posicion> posiciones, 
+            Posicion posicion){
+        for(int i=0; i<posiciones.size(); i++){
+            if(posiciones.get(i).getFila() == posicion.getFila() && 
+                    posiciones.get(i).getColumna() == posicion.getColumna())
+                return false;
+        }
+        return true;
     }
 }

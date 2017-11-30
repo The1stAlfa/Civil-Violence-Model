@@ -12,20 +12,19 @@ package com.cvm.model;
 public class Agente extends Actor{
     private double agravio;
     private Estado estado = Estado.INACTIVO;
+    private boolean estaEnPrision = false;
     private static final double LIMITE = 0.1;
     private double perjuicio;
     private double riesgoAversion;
-    private int vision;
     
     public Agente(){
         super(Categoria.AGENTE);
     }
 
     public Agente(double perjuicio, double riesgoAversion, int vision) {
-        super(Categoria.AGENTE);
+        super(Categoria.AGENTE, vision);
         this.perjuicio = perjuicio;
         this.riesgoAversion = riesgoAversion;
-        this.vision = vision;
     }
     
     public double getAgravio() {
@@ -34,6 +33,10 @@ public class Agente extends Actor{
 
     public Estado getEstado() {
         return estado;
+    }
+    
+    public boolean getEstaEnPrision(){
+        return this.estaEnPrision;
     }
 
     public double getPerjuicio() {
@@ -44,16 +47,16 @@ public class Agente extends Actor{
         return riesgoAversion;
     }
 
-    public int getVision() {
-        return vision;
-    }
-
     public void setAgravio(double agravio) {
         this.agravio = agravio;
     }
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+    
+    public void setEstaEnPrision(boolean estaEnPrision){
+        this.estaEnPrision = estaEnPrision;
     }
 
     public void setPerjuicio(double perjuicio) {
@@ -62,9 +65,5 @@ public class Agente extends Actor{
 
     public void setRiesgoAversion(double riesgoAversion) {
         this.riesgoAversion = riesgoAversion;
-    }
-
-    public void setVision(int vision) {
-        this.vision = vision;
     }
 }

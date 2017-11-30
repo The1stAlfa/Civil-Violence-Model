@@ -43,7 +43,7 @@ public class Universo {
         
         for(int i=0; i<poblacion.size(); i++){
             do{
-                coordenada = Aleatorio.posicionAleatoria(filas, columnas);
+                coordenada = Aleatorio.posicionAleatoria(columnas, filas);
             }while(!Validacion.validarCoordenada(matriz, coordenada));
             poblacion.get(i).setPosicion(coordenada);
             matriz.get(coordenada.getFila()).set(
@@ -97,6 +97,26 @@ public class Universo {
     
     public void imprimirMatriz(){
         
+    }
+    
+    public ArrayList<Actor> obtenerActores(ArrayList<Agente> poblacion, 
+            ArrayList<Policia> policias){
+        ArrayList<Actor> actores = new ArrayList<>();
+        actores.addAll(poblacion);
+        actores.addAll(policias);
+        
+        return actores;
+    }
+    
+    public Actor seleccionarActor(ArrayList<Actor> actores){
+        int indice;
+        do{
+            indice = Aleatorio.enteroAleatorio(0, actores.size()-1);
+            if(actores.get(indice).getCategoria().equals(Categoria.POLICIA))
+                break;
+        }while(Validacion.validarPrisionAgente((Agente) actores.get(indice)));
+        
+        return actores.get(indice);
     }
     
     public void setColumnas(int columnas) {

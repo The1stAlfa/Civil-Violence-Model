@@ -16,15 +16,15 @@ public class Aleatorio {
     public Aleatorio() {
     }
     
-    public static int enteroAleatorio(int min, int max){
+    public static int enteroAleatorio(int max, int min){
         int range = (max - min) + 1;     
         return (int)(Math.random() * range) + min;
     }
     
-    public static Posicion posicionAleatoria(int filas, int columnas){
+    public static Posicion posicionAleatoria(int columnas, int filas){
         int posX = enteroAleatorio(0, filas);
         int posY = enteroAleatorio(0,columnas);
         
-        return new Posicion(posX, posY);
+        return new Posicion(posY, posX);
     }
 }

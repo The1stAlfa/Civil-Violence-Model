@@ -44,6 +44,7 @@ public class Simulador {
     }
 
     public void ejecutarSimulacro(){
+        Actor actor;
         this.turno += 1;
         System.out.println("Turno: "+ this.turno + "\n");
         System.out.println("** Agentes ** Densidad: " + this.densidadAgentes + 
@@ -54,8 +55,19 @@ public class Simulador {
                 "Vision: " + this.visionPolicias + 
                 "-Cantidad- Matriz: " + " \n" + 
                 "Legitimidad del Gobierno: " + this.legitimidad);
-        
+        do{
+            actor = universo.seleccionarActor(universo.obtenerActores(
+                    universo.getPoblacion(), universo.getPolicias()));
+        }while(!actor.movimiento(universo.getColumnas(), universo.getFilas(), 
+                universo.getMatriz()));
+        if(actor.getCategoria().equals(Categoria.AGENTE)){
+            
+        }
+        else{
+            
+        }
     }
+    
     public int getDensidadAgentes() {
         return densidadAgentes;
     }
