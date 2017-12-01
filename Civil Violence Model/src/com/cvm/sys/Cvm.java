@@ -73,7 +73,7 @@ public class Cvm {
         parametros[3] = consola.nextLine();
         System.out.print("Vision de Agentes: ");
         parametros[4] = consola.nextLine();
-//        System.out.print("Vision de Policias: ");
+        System.out.print("Vision de Policias:");
         parametros[5] = consola.nextLine();
         System.out.print("Legitimidad del Gobierno: ");
         parametros[6] = consola.nextLine();

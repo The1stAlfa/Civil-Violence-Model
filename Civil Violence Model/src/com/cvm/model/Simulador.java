@@ -52,7 +52,6 @@ public class Simulador {
 	
 	if(turno == 0){
             System.out.println("  Matriz UNIVERSO inicial\n");
-            imprimirInformacion();
             universo.imprimirMatriz(tamanioUniverso[1], tamanioUniverso[0]);
             System.out.print("\nPresione Enter para continuar...");
             consola.nextLine();
@@ -61,6 +60,15 @@ public class Simulador {
             System.out.println("          SIMULADOR        \n");
         }
         this.turno += 1;
+        System.out.println("Turno: "+ this.turno + "\n");
+        System.out.println("** Agentes  ** Densidad: " + this.densidadAgentes + 
+                " Vision: " + this.visionAgentes + 
+                "  -Cantidad- Matriz: " +
+                "Prision: " + "\n" +
+                "** Policias ** Densidad:" + this.densidadPolicias + 
+                " Vision: " + this.visionPolicias + 
+                "  -Cantidad- Matriz: " + " \n" + 
+                "Legitimidad del Gobierno: " + this.legitimidad);
         prision.actualizarTurnoEnPrision();
         prision.liberarPrisioneros(universo.getMatriz());
         do{
@@ -74,10 +82,7 @@ public class Simulador {
         else
             ((Policia)actor).actuar(universo.getColumnas(), universo.getFilas(),
                     universo.getMatriz(), maxTurnosPrision, prision);
-        imprimirInformacion();
-        universo.imprimirMatriz(tamanioUniverso[1], tamanioUniverso[0]);
-        System.out.print("\nPresione Enter para continuar...");
-        consola.nextLine();
+        universo.imprimirMatriz(universo.getColumnas()-1, universo.getFilas()-1);
     }
     
     public int getDensidadAgentes() {
@@ -122,24 +127,6 @@ public class Simulador {
 
     public int getVisionPolicias() {
         return visionPolicias;
-    }
-    
-    public void imprimirInformacion(){
-        System.out.println("Turno: "+ this.turno + "\n");
-        System.out.println("** Agentes  ** \n" + 
-                "Densidad: " + this.densidadAgentes + 
-                " Vision: " + this.visionAgentes + 
-                "  -Cantidad- " + 
-                    "Matriz: " + universo.cantidadAgentes(null) + 
-                    " Activos: " + universo.cantidadAgentes(Estado.ACTIVO) + 
-                    " Inactivos: " + universo.cantidadAgentes(Estado.INACTIVO) + 
-                " Prision: " + prision.cantidadPrisioneros() + "\n" +
-                "** Policias ** \n" + 
-                "Densidad: " + this.densidadPolicias + 
-                " Vision: " + this.visionPolicias + 
-                "  -Cantidad- " + 
-                        "Matriz: " + universo.cantidadPolicias() +" \n" + 
-                "Legitimidad del Gobierno: " + this.legitimidad + "\n");
     }
     
     public void inicializarUniverso(){
