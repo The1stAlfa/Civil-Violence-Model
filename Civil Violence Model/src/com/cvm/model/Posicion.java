@@ -37,5 +37,4 @@ public class Posicion {
     public void setFila(int fila) {
         this.fila = fila;
     }
-
 }

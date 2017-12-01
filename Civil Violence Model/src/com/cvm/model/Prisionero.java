@@ -14,7 +14,6 @@ public class Prisionero {
     private int condena;
     private int turnosEnPrision = 0;
 
-
     public Prisionero() {
     }
 
