@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import com.cvm.util.Aleatorio;
 import com.cvm.util.Validacion;
 import java.util.List;
+import com.cvm.util.Color;
+import com.cvm.util.ColorBg;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,6 +26,8 @@ public class Test {
     private static int vision = 4;
     
     public static void main(String[] args){
+        for(int i=0; i<100; i++)
+            System.out.println(Aleatorio.enteroAleatorio(1, 0));
         inicializarMatriz(3, 3);
         Posicion pos1 = new Posicion(2, 2);
         Posicion pos2 = new Posicion(1, 1);

@@ -5,7 +5,9 @@
  */
 package com.cvm.model;
 
+import com.cvm.sys.Cvm;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -46,15 +48,26 @@ public class Simulador {
 
     public void ejecutarSimulacro(){
         Actor actor;
+	Scanner consola = new Scanner(System.in);
+	
+	if(turno == 0){
+            System.out.println("  Matriz UNIVERSO inicial\n");
+            universo.imprimirMatriz(tamanioUniverso[1], tamanioUniverso[0]);
+            System.out.print("\nPresione Enter para continuar...");
+            consola.nextLine();
+            Cvm.limpiarPantalla();
+            System.out.println("*** CIVIL VIOLENCE MODEL ***");
+            System.out.println("          SIMULADOR        \n");
+        }
         this.turno += 1;
         System.out.println("Turno: "+ this.turno + "\n");
-        System.out.println("** Agentes ** Densidad: " + this.densidadAgentes + 
-                "Vision: " + this.visionAgentes + 
-                "-Cantidad- Matriz: " +
+        System.out.println("** Agentes  ** Densidad: " + this.densidadAgentes + 
+                " Vision: " + this.visionAgentes + 
+                "  -Cantidad- Matriz: " +
                 "Prision: " + "\n" +
                 "** Policias ** Densidad:" + this.densidadPolicias + 
-                "Vision: " + this.visionPolicias + 
-                "-Cantidad- Matriz: " + " \n" + 
+                " Vision: " + this.visionPolicias + 
+                "  -Cantidad- Matriz: " + " \n" + 
                 "Legitimidad del Gobierno: " + this.legitimidad);
         prision.actualizarTurnoEnPrision();
         prision.liberarPrisioneros(universo.getMatriz());
@@ -69,7 +82,7 @@ public class Simulador {
         else
             ((Policia)actor).actuar(universo.getColumnas(), universo.getFilas(),
                     universo.getMatriz(), maxTurnosPrision, prision);
-        
+        universo.imprimirMatriz(universo.getColumnas()-1, universo.getFilas()-1);
     }
     
     public int getDensidadAgentes() {

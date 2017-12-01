@@ -35,18 +35,18 @@ public class Cvm {
     }
     
     public static void iniciarSimulacion(Object[] parametros){
-            simulacion = new Simulador(
-                    conversionEntero(parametros[2]), 
-                    conversionEntero(parametros[3]), 
-                    conversionDouble(parametros[6]),
-                    conversionEntero(parametros[7]),
-                    new int[]{
-                        conversionEntero(parametros[0]),
-                        conversionEntero(parametros[1])},
-                    conversionEntero(parametros[8]),
-                    conversionEntero(parametros[4]),
-                    conversionEntero(parametros[5]));
-        
+        simulacion = new Simulador(
+                conversionEntero(parametros[2]), 
+                conversionEntero(parametros[3]), 
+                conversionDouble(parametros[6]),
+                conversionEntero(parametros[7]),
+                new int[]{
+                    conversionEntero(parametros[0]),
+                    conversionEntero(parametros[1])},
+                conversionEntero(parametros[8]),
+                conversionEntero(parametros[4]),
+                conversionEntero(parametros[5]));
+
         for(int turno=0; turno<conversionEntero(parametros[8]); turno++){
             limpiarPantalla();
             System.out.println("*** CIVIL VIOLENCE MODEL ***");
@@ -63,7 +63,7 @@ public class Cvm {
             Thread.sleep(2000);
 	} catch (InterruptedException e) {
         	e.printStackTrace();}
-        System.out.print("*** TamaÃ±o de Universo ***\nFilas: ");
+        System.out.print("*** Tamaño de Universo ***\nFilas: ");
         parametros[0] = consola.nextLine();
         System.out.print("Columnas: ");
         parametros[1] = consola.nextLine();

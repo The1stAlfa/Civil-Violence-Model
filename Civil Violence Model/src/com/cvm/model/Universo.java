@@ -6,6 +6,7 @@
 package com.cvm.model;
 
 import com.cvm.util.Aleatorio;
+import com.cvm.util.Color;
 import com.cvm.util.Validacion;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class Universo {
         
         for(int i=0; i<policias.size(); i++){
             do{
-                coordenada = Aleatorio.posicionAleatoria(filas, columnas);
+                coordenada = Aleatorio.posicionAleatoria(columnas, filas);
             }while(Validacion.validarCoordenada(matriz, coordenada) == 0);
             policias.get(i).setPosicion(coordenada);
             matriz.get(coordenada.getFila()).set(
@@ -95,8 +96,30 @@ public class Universo {
         }
     }
     
-    public void imprimirMatriz(){
-        
+    public void imprimirMatriz(int columnas, int filas){
+        for(int i=0; i<filas; i++){
+            System.out.print("\t");
+            for(int j=0; j<columnas; j++){
+                Actor actor = matriz.get(i).get(j); 
+                if(actor != null){ 
+                    if(actor.getCategoria().equals(Categoria.AGENTE)){
+                        Agente agente = (Agente)actor;
+                        if(agente.getEstado().equals(Estado.ACTIVO))
+                            System.out.print(Color.RED.getCodigo() + "0" 
+                                    + Color.RESET.getCodigo());
+                        else
+                            System.out.print(Color.BLUE.getCodigo() + "0" 
+                                    + Color.RESET.getCodigo());
+                    }
+                    else
+                        System.out.print(Color.BLACK.getCodigo() + "0" 
+                                + Color.RESET.getCodigo());
+                }
+                else
+                    System.out.print(" ");
+            }
+            System.out.println("");
+        }
     }
     
     public ArrayList<Actor> obtenerActores(ArrayList<Agente> poblacion, 

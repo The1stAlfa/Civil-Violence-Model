@@ -22,8 +22,8 @@ public class Aleatorio {
     }
     
     public static Posicion posicionAleatoria(int columnas, int filas){
-        int posX = enteroAleatorio(0, filas);
-        int posY = enteroAleatorio(0,columnas);
+        int posX = enteroAleatorio(filas, 0);
+        int posY = enteroAleatorio(columnas, 0);
         
         return new Posicion(posY, posX);
     }
