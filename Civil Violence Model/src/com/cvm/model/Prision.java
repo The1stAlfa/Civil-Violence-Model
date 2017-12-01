@@ -22,11 +22,14 @@ public class Prision {
     }
      
     public void actualizarTurnoEnPrision(){
-        for(int i=0; i<prisioneros.size(); i++){
+        for(int i=0; i<prisioneros.size(); i++)
             prisioneros.get(i).aumentarTurnoEnPrision();
-        }
     }
-
+    
+    public int cantidadPrisioneros(){
+        return this.prisioneros.size();
+    }
+    
     public void colocarPrisionero(Agente agente, int condena){
         prisioneros.add(new Prisionero(agente, condena));
     }
@@ -44,7 +47,7 @@ public class Prision {
         int posX, posY;
         
         do{
-            coordenada = Aleatorio.posicionAleatoria(columnas, filas);
+            coordenada = Aleatorio.posicionAleatoria(columnas - 1, filas - 1);
         }while(Validacion.validarCoordenada(matriz, coordenada) == 0);
         posX = coordenada.getFila();
         posY = coordenada.getColumna();

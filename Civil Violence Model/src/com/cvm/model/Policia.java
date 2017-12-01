@@ -50,7 +50,7 @@ public class Policia extends Actor{
             int posX = posiciones.get(i).getFila();
             int posY = posiciones.get(i).getColumna();
             Agente agente = (Agente)(matriz.get(posX).get(posY)); 
-            if(agente.getEstado().ACTIVO.equals(Estado.ACTIVO))
+            if(agente.getEstado().equals(Estado.ACTIVO))
                 agentesActivos.add(agente);
         }
         
