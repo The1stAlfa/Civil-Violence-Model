@@ -38,31 +38,6 @@ public class Universo {
         this.policias = policias;
     }
     
-    public int cantidadAgentes(Estado estado){
-        int cantidad = 0;
-        Agente agente;
-        for(List<Actor> lista: matriz){
-            for(Actor actor: lista){
-                if(actor != null){
-                    if(actor.getCategoria().equals(Categoria.AGENTE)){
-                        if(estado != null){
-                            agente = (Agente) actor;
-                            if(agente.getEstado().equals(estado))
-                                cantidad++;
-                        }
-                        else
-                            cantidad++;
-                    }
-                }
-            }
-        }
-        return cantidad;
-    }
-    
-    public int cantidadPolicias(){
-        return this.policias.size();
-    }
-    
     public void colocarAgentes(int columnas, int filas, 
             List<List<Actor>> matriz, ArrayList<Agente> poblacion){
         Posicion coordenada = new Posicion();
