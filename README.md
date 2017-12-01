@@ -1,2 +1,2 @@
 # Civil-Violence-Model
-Civil Violence Model Applivation
+Civil Violence Model Application
