@@ -30,6 +30,21 @@ public class Validacion {
         return 0;
     }
     
+    public static boolean validarIngresoEntero(String dato, int limiteInferior, 
+            int limiteSuperior){
+        return false;
+    }
+    
+    public static boolean validarIngresoDouble(String dato, double limiteInferior, 
+            double limiteSuperior){
+        return false;
+    }
+    public static boolean validarIngresoTexto(String dato){
+        if(dato.isEmpty())
+            return false;
+        return true;
+    }
+    
     public static boolean validarPrisionAgente(Agente agente){
         return agente.getEstaEnPrision();
     }

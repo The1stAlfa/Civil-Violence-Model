@@ -8,6 +8,7 @@ package com.cvm.sys;
 import com.cvm.model.Simulador;
 import static com.cvm.util.Conversion.conversionEntero;
 import static com.cvm.util.Conversion.conversionDouble;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
@@ -35,6 +36,7 @@ public class Cvm {
     }
     
     public static void iniciarSimulacion(Object[] parametros){
+        String ruta = "resources/cvm" + tiempo() + ".csv";
         simulacion = new Simulador(
                 conversionEntero(parametros[2]), 
                 conversionEntero(parametros[3]), 
@@ -51,7 +53,7 @@ public class Cvm {
             limpiarPantalla();
             System.out.println("*** CIVIL VIOLENCE MODEL ***");
             System.out.println("          SIMULADOR        \n");
-            simulacion.ejecutarSimulacro();
+            simulacion.ejecutarSimulacro(ruta);
         }
     }
     
@@ -88,5 +90,16 @@ public class Cvm {
     public static void limpiarPantalla(){
         for(int i=0; i<40; i++)
             System.out.println("");
+    }
+    
+    public static String tiempo(){
+        LocalDateTime dateTime = LocalDateTime.now();
+        String date = dateTime.toLocalDate().toString();
+        String hour = String.valueOf(dateTime.getHour());
+        String minute = String.valueOf(dateTime.getMinute());
+        String second = String.valueOf(dateTime.getSecond());
+        String time = hour + minute + second;
+        
+        return date+"-"+time;
     }
 }

@@ -6,8 +6,12 @@
 package com.cvm.model;
 
 import com.cvm.sys.Cvm;
+import com.cvm.util.Archivo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,9 +50,10 @@ public class Simulador {
         inicializarUniverso();
     }
 
-    public void ejecutarSimulacro(){
+    public void ejecutarSimulacro(String ruta){
         Actor actor;
 	Scanner consola = new Scanner(System.in);
+        String data = new String();
 	
 	if(turno == 0){
             System.out.println("  Matriz UNIVERSO inicial\n");
@@ -78,6 +83,15 @@ public class Simulador {
         universo.imprimirMatriz(tamanioUniverso[1], tamanioUniverso[0]);
         System.out.print("\nPresione Enter para continuar...");
         consola.nextLine();
+        data = String.valueOf(turno) + ";" +
+                String.valueOf(universo.cantidadAgentes(Estado.ACTIVO)) + ";" +
+                String.valueOf(universo.cantidadAgentes(Estado.INACTIVO)) + ";" 
+                + String.valueOf(prision.cantidadPrisioneros());
+        try {
+            Archivo.grabar(ruta, data);
+        } catch (IOException ex) {
+            Logger.getLogger(Simulador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public int getDensidadAgentes() {
