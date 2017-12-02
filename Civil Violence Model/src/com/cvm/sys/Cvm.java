@@ -36,7 +36,7 @@ public class Cvm {
     }
     
     public static void iniciarSimulacion(Object[] parametros){
-        String ruta = "resources/cvm" + tiempo() + ".csv";
+        String nombreArchivo = "cvm" + tiempo() + ".csv";
         simulacion = new Simulador(
                 conversionEntero(parametros[2]), 
                 conversionEntero(parametros[3]), 
@@ -53,7 +53,7 @@ public class Cvm {
             limpiarPantalla();
             System.out.println("*** CIVIL VIOLENCE MODEL ***");
             System.out.println("          SIMULADOR        \n");
-            simulacion.ejecutarSimulacro(ruta);
+            simulacion.ejecutarSimulacro(nombreArchivo);
         }
     }
     

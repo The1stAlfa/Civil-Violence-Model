@@ -19,7 +19,7 @@ public class Archivo {
     private static File archivo;
     
     public static boolean grabar(String ruta, String data) throws IOException{
-        archivo = new File(ruta);
+        archivo = new File(System.getProperty("user.dir"), ruta);
         
         if(archivo.exists()){
             bw = new BufferedWriter(new FileWriter(archivo, true));
