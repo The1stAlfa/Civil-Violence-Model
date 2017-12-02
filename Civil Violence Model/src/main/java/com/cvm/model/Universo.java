@@ -10,6 +10,10 @@ import com.cvm.util.Color;
 import com.cvm.util.Validacion;
 import java.util.ArrayList;
 import java.util.List;
+import com.diogonunes.jcdp.color.ColoredPrinter;
+import com.diogonunes.jcdp.color.api.Ansi.Attribute;
+import com.diogonunes.jcdp.color.api.Ansi.BColor;
+import com.diogonunes.jcdp.color.api.Ansi.FColor;
 
 /**
  *
@@ -111,6 +115,11 @@ public class Universo {
         return policias;
     }
     
+    /**
+     *
+     * @param columnas
+     * @param filas
+     */
     public void inicializarMatriz(int columnas, int filas){
         matriz = new ArrayList<List<Actor>>();
         for(int i=0; i<filas; i++){
@@ -121,6 +130,9 @@ public class Universo {
         }
     }
     
+    // Muestra matriz usando colores para diferenciar a los agentes 
+    // en la consola del NetBeans
+    /*
     public void imprimirMatriz(int columnas, int filas){
         System.out.print("\t ");
         for(int i=0; i<columnas; i++)
@@ -158,6 +170,99 @@ public class Universo {
             System.out.print("-");
         System.out.println("");
     }
+    */
+
+    /**
+     *
+     * @param columnas
+     * @param filas
+     */
+    
+    public void imprimirMatriz(int columnas, int filas){
+        System.out.print("\t ");
+        for(int i=0; i<columnas; i++)
+            System.out.print("-");
+        System.out.println("");
+        for(int i=0; i<filas; i++){
+            System.out.print("\t");
+            for(int j=0; j<columnas; j++){
+                if(j == 0)
+                    System.out.print("|");
+                Actor actor = matriz.get(i).get(j); 
+                if(actor != null){ 
+                    if(actor.getCategoria().equals(Categoria.AGENTE)){
+                        Agente agente = (Agente)actor;
+                        if(agente.getEstado().equals(Estado.ACTIVO))
+                            System.out.print("@");
+                        else
+                            System.out.print(".");
+                    }
+                    else
+                        System.out.print("P");
+                }
+                else
+                    System.out.print(" ");
+                if(j == columnas - 1)
+                    System.out.print("|");
+            }
+            System.out.println("");
+        }
+        System.out.print("\t ");
+        for(int i=0; i<columnas; i++)
+            System.out.print("-");
+        System.out.println("");
+    }
+    
+    // Muestra matriz usando colores para diferenciar a los agentes 
+    // para consolas Windows y Linux
+    /*
+    public void imprimirMatriz(int columnas, int filas){
+        ColoredPrinter cp = new ColoredPrinter.Builder(1, false)
+                        .foreground(FColor.WHITE).background(BColor.BLACK)   //setting format
+                        .build();
+
+        cp.print("\t ");
+        for(int i=0; i<columnas; i++)
+            cp.print("-");
+        System.out.println("");
+        for(int i=0; i<filas; i++){
+            cp.print("\t");
+            for(int j=0; j<columnas; j++){
+                if(j == 0)
+                    cp.print("|");
+                Actor actor = matriz.get(i).get(j); 
+                if(actor != null){ 
+                    if(actor.getCategoria().equals(Categoria.AGENTE)){
+                        Agente agente = (Agente)actor;
+                        if(agente.getEstado().equals(Estado.ACTIVO))
+                            cp.print("0", Attribute.NONE, FColor.RED, 
+                                BColor.BLACK);
+                        else
+                            cp.print("0", Attribute.NONE, FColor.BLUE, 
+                                BColor.BLACK);
+                    }
+                    else{
+                        cp.clear();
+                        System.out.print("0");
+                    }
+                }
+                else{
+                    cp.clear();
+                    System.out.print(" ");
+                }
+                if(j == columnas - 1){
+                    cp.clear();
+                    System.out.println("|");
+                }
+            }
+            cp.clear();
+        }
+        System.out.print("\t ");
+        for(int i=0; i<columnas; i++)
+            System.out.print("-");
+        System.out.println("");
+    }*/
+
     
     public ArrayList<Actor> obtenerActores(ArrayList<Agente> poblacion, 
             ArrayList<Policia> policias){

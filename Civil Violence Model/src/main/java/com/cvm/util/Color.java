@@ -10,13 +10,13 @@ package com.cvm.util;
  * @author ij_le
  */
 public enum Color {
-    BLACK ("\u001B[30m"),
-    BLUE ("\u001B[34m"),
+    BLACK ("\033[1;30m"),
+    BLUE ("\033[1;34m"),
     CYAN ("\u001B[36m"),
     GREEN ("\u001B[32m"),
     MAGENTA ("\u001B[35m"),
-    RED ("\u001B[31m"),
-    RESET ("\u001B[0m"),    
+    RED ("\033[1;31m"),
+    RESET ("\033[0m"),    
     WHITE ("\u001B[37m"),
     YELLOW ("\u001B[33m");
     

@@ -32,7 +32,22 @@ public class Validacion {
     
     public static boolean validarIngresoEntero(String dato, int limiteInferior, 
             int limiteSuperior){
-        return false;
+        int entero;
+        
+        try{
+            entero = Integer.parseInt(dato);
+        }catch(NumberFormatException e){
+            if(dato.isEmpty())
+                System.out.println("Ingreso de datos requerido.");
+            else
+                System.out.println("Formato de Ingreso Invalido");
+            return false;
+        }
+        if(entero < limiteInferior || entero > limiteSuperior){
+            System.out.println("Ingreso Invalido");
+            return false;
+        }
+        return true;
     }
     
     public static boolean validarIngresoDouble(String dato, double limiteInferior, 

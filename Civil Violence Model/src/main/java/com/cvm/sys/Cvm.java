@@ -8,6 +8,7 @@ package com.cvm.sys;
 import com.cvm.model.Simulador;
 import static com.cvm.util.Conversion.conversionEntero;
 import static com.cvm.util.Conversion.conversionDouble;
+import com.cvm.util.Validacion;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -65,24 +66,39 @@ public class Cvm {
             Thread.sleep(2000);
 	} catch (InterruptedException e) {
         	e.printStackTrace();}
-        System.out.print("*** Tamaño de Universo ***\nFilas: ");
-        parametros[0] = consola.nextLine();
-        System.out.print("Columnas: ");
-        parametros[1] = consola.nextLine();
+        System.out.println("*** Tamaño de Universo ***");
+        do{
+            System.out.print("Filas: ");
+            parametros[0] = consola.nextLine();
+        }while(!Validacion.validarIngresoEntero((String) parametros[0], 3, 500));
+        do{
+            System.out.print("Columnas: ");
+            parametros[1] = consola.nextLine();
+        }while(!Validacion.validarIngresoEntero((String) parametros[1], 3, 500));
         System.out.print("Densidad de Agentes: ");
         parametros[2] = consola.nextLine();
         System.out.print("Densidad de Policias: ");
         parametros[3] = consola.nextLine();
-        System.out.print("Vision de Agentes: ");
-        parametros[4] = consola.nextLine();
-        System.out.print("Vision de Policias: ");
-        parametros[5] = consola.nextLine();
+        do{
+            System.out.print("Vision de Agentes: ");
+            parametros[4] = consola.nextLine();
+        }while(Validacion.validarIngresoEntero((String) parametros[4], 1, 100));
+        do{
+            System.out.print("Vision de Policias: ");
+            parametros[5] = consola.nextLine();
+        }while(Validacion.validarIngresoEntero((String) parametros[5], 1, 100));
         System.out.print("Legitimidad del Gobierno: ");
         parametros[6] = consola.nextLine();
-        System.out.print("Maximo de Turnos en prision: ");
-        parametros[7] = consola.nextLine();
-        System.out.print("Numero de Turnos para simulacion: ");
-        parametros[8] = consola.nextLine();
+        do{
+            System.out.print("Maximo de Turnos en prision: ");
+            parametros[7] = consola.nextLine();
+        }while(Validacion.validarIngresoEntero((String) parametros[7], 1, 
+                Integer.MAX_VALUE));
+        do{
+            System.out.print("Numero de Turnos para simulacion: ");
+            parametros[8] = consola.nextLine();
+        }while(Validacion.validarIngresoEntero((String) parametros[8], 1, 
+                Integer.MAX_VALUE));
         
         return parametros;
     }
