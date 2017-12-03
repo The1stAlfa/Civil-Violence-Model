@@ -139,7 +139,8 @@ public class Simulador {
     }
     
     public void imprimirInformacion(){
-        System.out.println("Turno: "+ this.turno + "\n");
+        if(turno != 0)
+            System.out.println("Turno: "+ this.turno + "\n");
         System.out.println("** Agentes  ** \n" + 
                 "Densidad: " + this.densidadAgentes + 
                 " Vision: " + this.visionAgentes + 
@@ -148,6 +149,7 @@ public class Simulador {
                     " Activos: " + universo.cantidadAgentes(Estado.ACTIVO) + 
                     " Inactivos: " + universo.cantidadAgentes(Estado.INACTIVO) + 
                 " Prision: " + prision.cantidadPrisioneros() + "\n" +
+                        "-Simbolo- Activo: @ Inactivo: ." +
                 "** Policias ** \n" + 
                 "Densidad: " + this.densidadPolicias + 
                 " Vision: " + this.visionPolicias + 

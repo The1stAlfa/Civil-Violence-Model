@@ -52,8 +52,24 @@ public class Validacion {
     
     public static boolean validarIngresoDouble(String dato, double limiteInferior, 
             double limiteSuperior){
-        return false;
+        double flotante;
+        
+        try{
+            flotante = Double.parseDouble(dato);
+        }catch(NumberFormatException e){
+            if(dato.isEmpty())
+                System.out.println("Ingreso de datos requerido.");
+            else
+                System.out.println("Formato de Ingreso Invalido");
+            return false;
+        }
+        if(flotante < limiteInferior || flotante > limiteSuperior){
+            System.out.println("Ingreso Invalido");
+            return false;
+        }
+        return true;
     }
+    
     public static boolean validarIngresoTexto(String dato){
         if(dato.isEmpty())
             return false;
