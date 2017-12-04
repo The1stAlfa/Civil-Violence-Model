@@ -12,7 +12,9 @@ package com.cvm.util;
 public class Conversion {
     
     public static boolean conversionBooleano(Object o){
-        return Boolean.parseBoolean(o.toString());
+        if(o.toString().equalsIgnoreCase("1"))
+            return true;
+        return false;
     }
     
     public static int conversionEntero(Object o){

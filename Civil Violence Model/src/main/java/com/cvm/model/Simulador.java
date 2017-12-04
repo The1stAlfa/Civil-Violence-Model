@@ -52,7 +52,15 @@ public class Simulador {
         this.visionPolicias = visionPolicias;
         inicializarUniverso();
     }
-
+    
+    public int calcularNumeroAgentes(int densidad, float tamanio){
+        return (int)((float)tamanio * (float)densidad/100);
+    }
+    
+    public int calcularNumeroPolicias(int densidad, float tamanio){
+        return (int)((float)tamanio * (float)densidad/100); 
+    }
+    
     public void ejecutarSimulacro(String ruta){
         Actor actor;
 	Scanner consola = new Scanner(System.in);
@@ -153,7 +161,7 @@ public class Simulador {
                     " Inactivos: " + universo.cantidadAgentes(Estado.INACTIVO) + 
                 " Prision: " + prision.cantidadPrisioneros() + "\n" +
                         "-Simbolo- Activo: @ Inactivo: ." +
-                "** Policias ** \n" + 
+                "\n** Policias ** \n" + 
                 "Densidad: " + this.densidadPolicias + 
                 " Vision: " + this.visionPolicias + 
                 "  -Cantidad- " + 
@@ -181,22 +189,29 @@ public class Simulador {
     public ArrayList<Agente> obtenerAgentes(int densidad, boolean movimiento, 
             float tamanio, int vision){
         ArrayList<Agente> agentes = new ArrayList<>();
-        int numeroDeAgentes = 
-                (int)((float)tamanio * (float)densidad/100);
+        int numeroDeAgentes = calcularNumeroAgentes(densidad, tamanio);
+        
         for(int a=0; a<numeroDeAgentes; a++){
             agentes.add(new Agente(movimiento, Math.random(), 
                     Math.random(), vision));
         }
-        
         return agentes;
     }
     
+    /**
+     *
+     * @param densidad
+     * @param movimiento
+     * @param tamanio
+     * @param vision
+     * @return
+     */
     public ArrayList<Policia> obtenerPolicias(int densidad, boolean movimiento, 
             float tamanio, int vision){
         ArrayList<Policia> policias = new ArrayList<>();
-        int numeroDeAgentes = 
-                (int)((float)tamanio * (float)densidad/100);
-        for(int a=0; a<numeroDeAgentes; a++)
+        int numeroDePolicias = calcularNumeroPolicias(densidad, tamanio);
+                
+        for(int a=0; a<numeroDePolicias; a++)
             policias.add(new Policia(movimiento, vision));
         
         return policias;

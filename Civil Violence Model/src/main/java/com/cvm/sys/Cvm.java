@@ -78,49 +78,57 @@ public class Cvm {
             System.out.print("Columnas: ");
             parametros[1] = consola.nextLine();
         }while(!Validacion.validarIngresoEntero((String) parametros[1], 3, 500));
-        System.out.println("Ingrese 0 para activar movimiento o 1 para apagarlo");
+        System.out.println("\nEncender movimiento 1 o 0 para apagarlo");
         do{
             System.out.print("Movimiento: ");
             parametros[9] = consola.nextLine();
-        }while(Validacion.validarIngresoEntero((String) parametros[9], 0, 1));
-        System.out.println("Ingrese valores entre 0 y 100");
+        }while(!Validacion.validarIngresoEntero((String) parametros[9], 0, 1));
         do{
-            System.out.print("Densidad de Agentes %: ");
-            parametros[2] = consola.nextLine();
-        }while(!Validacion.validarIngresoEntero((String) parametros[2], 0, 100));
-        System.out.println("Ingrese valores entre 0 y 100"
+            System.out.println("\nIngrese valores entre 0 y 99"
                     + "\nLa suma de las densidades entre Agente y Policia no "
-                    + "debe sobrepasar el 100%");
+                        + "debe sobrepasar el 99%");
+            do{
+                System.out.print("Densidad de Agentes %: ");
+                parametros[2] = consola.nextLine();
+            }while(!Validacion.validarIngresoEntero((String) parametros[2], 0, 100));
+            System.out.println("\nIngrese valores entre 0 y 99"
+                        + "\nLa suma de las densidades entre Agente y Policia no "
+                        + "debe sobrepasar el 99%");
+            do{
+                System.out.print("Densidad de Policias %: ");
+                parametros[3] = consola.nextLine();
+            }while(!Validacion
+                    .validarIngresoEntero((String) parametros[3], 0, 100));
+        }while(conversionEntero(parametros[2]) 
+                + conversionEntero(parametros[3]) > 99);    
         do{
-            System.out.print("Densidad de Policias %: ");
-            parametros[3] = consola.nextLine();
-        }while(!Validacion.validarIngresoEntero((String) parametros[3], 0, 100));
-        System.out.println("Ingrese valores entre 0 y como maximo el "
+            System.out.println("\nIngrese valores entre 0 y como maximo el "
                     + "tamanio de la matriz");
-        do{    
-            System.out.print("Vision de Agentes: ");
-            parametros[4] = consola.nextLine();
-        }while(!Validacion.validarIngresoEntero((String) parametros[4], 1, 100));
-        System.out.println("Ingrese valores entre 0 y como maximo el "
-                    + "tamanio de la matriz");
-        System.out.println("La vision del Policia debe ser diferente "
-                    + "del Agente");
-        do{    
-            System.out.print("Vision de Policias: ");
-            parametros[5] = consola.nextLine();
-        }while(!Validacion.validarIngresoEntero((String) parametros[5], 1, 100));
-        System.out.println("Ingrese valores entre 0 y 1");
+            do{    
+                System.out.print("Vision de Agentes: ");
+                parametros[4] = consola.nextLine();
+            }while(!Validacion.validarIngresoEntero((String) parametros[4], 1, 100));
+            System.out.println("\nIngrese valores entre 0 y como maximo el "
+                        + "tamanio de la matriz");
+            System.out.println("La vision del Policia debe ser diferente "
+                        + "del Agente");
+            do{    
+                System.out.print("Vision de Policias: ");
+                parametros[5] = consola.nextLine();
+            }while(!Validacion.validarIngresoEntero((String) parametros[5], 1, 100));
+        }while(conversionEntero(parametros[4]) == conversionEntero(parametros[5]));
+        System.out.println("\nIngrese valores entre 0 y 1");
         do{
             System.out.print("Legitimidad del Gobierno: ");
             parametros[6] = consola.nextLine();
         }while(!Validacion.validarIngresoDouble((String) parametros[6], 0, 1));
-        System.out.println("Ingrese valores entre 1 y 2147483647");
+        System.out.println("\nIngrese valores entre 1 y 2147483647");
         do{
             System.out.print("Maximo de Turnos en prision: ");
             parametros[7] = consola.nextLine();
         }while(!Validacion.validarIngresoEntero((String) parametros[7], 1, 
                 Integer.MAX_VALUE));
-        System.out.println("Ingrese valores entre 1 y 2147483647");
+        System.out.println("\nIngrese valores entre 1 y 2147483647");
         do{
             System.out.print("Numero de Turnos para simulacion: ");
             parametros[8] = consola.nextLine();
