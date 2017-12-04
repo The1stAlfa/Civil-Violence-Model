@@ -6,8 +6,8 @@
 package com.cvm.sys;
 
 import com.cvm.model.Simulador;
-import static com.cvm.util.Conversion.conversionEntero;
-import static com.cvm.util.Conversion.conversionDouble;
+import com.cvm.util.Conversion;
+import static com.cvm.util.Conversion.*;
 import com.cvm.util.Validacion;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -42,6 +42,7 @@ public class Cvm {
                 conversionEntero(parametros[2]), 
                 conversionEntero(parametros[3]), 
                 conversionDouble(parametros[6]),
+                conversionBooleano(parametros[9]),
                 conversionEntero(parametros[7]),
                 new int[]{
                     conversionEntero(parametros[0]),
@@ -59,7 +60,7 @@ public class Cvm {
     }
     
     public static Object[] solicitarParametrosDeSimulacion(){
-        Object[] parametros = new Object[9];
+        Object[] parametros = new Object[10];
         System.out.println("Para iniciar la simulacion");
         System.out.println("Ingrese los siguiente parametros...\n");
         try {
@@ -77,18 +78,23 @@ public class Cvm {
             System.out.print("Columnas: ");
             parametros[1] = consola.nextLine();
         }while(!Validacion.validarIngresoEntero((String) parametros[1], 3, 500));
+        System.out.println("Ingrese 0 para activar movimiento o 1 para apagarlo");
+        do{
+            System.out.print("Movimiento: ");
+            parametros[9] = consola.nextLine();
+        }while(Validacion.validarIngresoEntero((String) parametros[9], 0, 1));
         System.out.println("Ingrese valores entre 0 y 100");
         do{
             System.out.print("Densidad de Agentes %: ");
             parametros[2] = consola.nextLine();
-        }while(!Validacion.validarIngresoEntero((String) parametros[1], 0, 100));
+        }while(!Validacion.validarIngresoEntero((String) parametros[2], 0, 100));
         System.out.println("Ingrese valores entre 0 y 100"
                     + "\nLa suma de las densidades entre Agente y Policia no "
                     + "debe sobrepasar el 100%");
         do{
             System.out.print("Densidad de Policias %: ");
             parametros[3] = consola.nextLine();
-        }while(!Validacion.validarIngresoEntero((String) parametros[1], 0, 100));
+        }while(!Validacion.validarIngresoEntero((String) parametros[3], 0, 100));
         System.out.println("Ingrese valores entre 0 y como maximo el "
                     + "tamanio de la matriz");
         do{    

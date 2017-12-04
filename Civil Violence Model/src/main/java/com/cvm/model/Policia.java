@@ -19,8 +19,8 @@ public class Policia extends Actor{
         super(Categoria.POLICIA);
     }
 
-    public Policia(int vision) {
-        super(Categoria.POLICIA, vision);
+    public Policia(boolean movimiento, int vision) {
+        super(movimiento, Categoria.POLICIA, vision);
     }
     
     public void actuar(int columnas, int filas, List<List<Actor>> matriz, 

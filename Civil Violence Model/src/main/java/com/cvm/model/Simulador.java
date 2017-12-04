@@ -22,8 +22,9 @@ public class Simulador {
     private int densidadPolicias;
     protected double legitimidad;
     private int maxTurnosPrision;
+    private boolean movimiento;
     private int turnosSimulacion;
-    protected static Prision prision;
+    private static Prision prision;
     private int[] tamanioUniverso;
     private int turno;    
     protected Universo universo;
@@ -35,12 +36,14 @@ public class Simulador {
     }
     
     public Simulador(int densidadAgentes, int densidadPolicias, 
-            double legitimidad, int maxTurnosPrision, int[] tamanioUniverso,
-            int turnosSimulacion, int visionAgentes, int visionPolicias){
+            double legitimidad, boolean movimiento, int maxTurnosPrision, 
+            int[] tamanioUniverso, int turnosSimulacion, int visionAgentes, 
+            int visionPolicias){
        
         this.densidadAgentes = densidadAgentes;
         this.densidadPolicias = densidadPolicias;
         this.legitimidad = legitimidad;
+        this.movimiento = movimiento;
         this.maxTurnosPrision = maxTurnosPrision;
         this.prision = new Prision();
         this.tamanioUniverso = tamanioUniverso;
@@ -71,7 +74,7 @@ public class Simulador {
         do{
             actor = universo.seleccionarActor(universo.obtenerActores(
                     universo.getPoblacion(), universo.getPolicias()));
-        }while(!actor.movimiento(universo.getColumnas(), universo.getFilas(), 
+        }while(!actor.moverse(universo.getColumnas(), universo.getFilas(), 
                 universo.getMatriz()));
         if(actor.getCategoria().equals(Categoria.AGENTE))
             ((Agente)actor).actuar(universo.getColumnas(), universo.getFilas(), 
@@ -164,9 +167,9 @@ public class Simulador {
         float tamanio = (float)(filas * columnas);
         
         universo = new Universo(columnas, filas, 
-                obtenerAgentes(this.densidadAgentes, tamanio, 
+                obtenerAgentes(this.densidadAgentes, this.movimiento, tamanio, 
                         this.visionAgentes), 
-                obtenerPolicias(this.densidadPolicias, tamanio, 
+                obtenerPolicias(this.densidadPolicias, this.movimiento, tamanio, 
                         this.visionPolicias));
         universo.inicializarMatriz(columnas, filas);
         universo.colocarAgentes(columnas-1, filas-1, universo.getMatriz(), 
@@ -175,25 +178,26 @@ public class Simulador {
                 universo.getPolicias());          
     }
     
-    public ArrayList<Agente> obtenerAgentes(int densidad, float tamanio, 
-            int vision){
+    public ArrayList<Agente> obtenerAgentes(int densidad, boolean movimiento, 
+            float tamanio, int vision){
         ArrayList<Agente> agentes = new ArrayList<>();
         int numeroDeAgentes = 
                 (int)((float)tamanio * (float)densidad/100);
         for(int a=0; a<numeroDeAgentes; a++){
-            agentes.add(new Agente(Math.random(), Math.random(), vision));
+            agentes.add(new Agente(movimiento, Math.random(), 
+                    Math.random(), vision));
         }
         
         return agentes;
     }
     
-    public ArrayList<Policia> obtenerPolicias(int densidad, float tamanio,
-            int vision){
+    public ArrayList<Policia> obtenerPolicias(int densidad, boolean movimiento, 
+            float tamanio, int vision){
         ArrayList<Policia> policias = new ArrayList<>();
         int numeroDeAgentes = 
                 (int)((float)tamanio * (float)densidad/100);
         for(int a=0; a<numeroDeAgentes; a++)
-            policias.add(new Policia(vision));
+            policias.add(new Policia(movimiento, vision));
         
         return policias;
     }

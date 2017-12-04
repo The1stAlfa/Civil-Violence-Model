@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class Actor {
     private Categoria categoria;
+    private boolean movimiento;
     private Posicion posicion;
     private int vision;
     
@@ -26,7 +27,8 @@ public class Actor {
         this.categoria = categoria;
     }
     
-    public Actor(Categoria  categoria, int vision){
+    public Actor(boolean movimiento, Categoria  categoria, int vision){
+        this.movimiento = movimiento;
         this.categoria = categoria;
         this.vision = vision;
     }
@@ -40,6 +42,10 @@ public class Actor {
     public Categoria getCategoria() {
         return categoria;
     }
+
+    public boolean isMovimiento() {
+        return movimiento;
+    }
     
     public Posicion getPosicion(){
         return this.posicion;
@@ -49,7 +55,7 @@ public class Actor {
         return vision;
     }
     
-    public boolean movimiento(int columnas, int filas, List<List<Actor>> matriz){
+    public boolean moverse(int columnas, int filas, List<List<Actor>> matriz){
         ArrayList<Posicion> espacios = 
                 inspeccionar(null, columnas, filas, matriz, posicion);
         
@@ -69,6 +75,10 @@ public class Actor {
     
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public void setMovimiento(boolean movimiento) {
+        this.movimiento = movimiento;
     }
     
     public void setPosicion(Posicion posicion){

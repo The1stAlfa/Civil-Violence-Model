@@ -120,7 +120,7 @@ public class Test {
         int numeroDeAgentes = 
                 (int)((float)tamanio * (float)densidad/100);
         for(int a=0; a<numeroDeAgentes; a++){
-            agentes.add(new Agente(Math.random(), Math.random(), vision));
+            agentes.add(new Agente(true, Math.random(), Math.random(), vision));
         }
         
         return agentes;
@@ -151,7 +151,7 @@ public class Test {
                 (int)((float)89* (float)58/100);
         System.out.println(numeroDeAgentes);
         for(int a=0; a<numeroDeAgentes; a++){
-            agentes.add(new Agente(Math.random(), Math.random(), 2));
+            agentes.add(new Agente(true, Math.random(), Math.random(), 2));
         }
         for(int a=0; a<numeroDeAgentes; a++)
             System.out.println(agentes.get(a).getPerjuicio()+ "+" + agentes.get(a).getRiesgoAversion());

@@ -22,8 +22,8 @@ public class Agente extends Actor{
         super(Categoria.AGENTE);
     }
 
-    public Agente(double perjuicio, double riesgoAversion, int vision) {
-        super(Categoria.AGENTE, vision);
+    public Agente(boolean movimiento, double perjuicio, double riesgoAversion, int vision) {
+        super(movimiento, Categoria.AGENTE, vision);
         this.perjuicio = perjuicio;
         this.riesgoAversion = riesgoAversion;
     }
