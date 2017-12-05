@@ -18,6 +18,28 @@ import java.util.List;
  */
 public class Validacion {
     
+    public static boolean esAgente(List<List<Actor>> matriz, 
+            Posicion coordenada){
+        int posX = coordenada.getFila();
+        int posY = coordenada.getColumna();
+        Actor actor = matriz.get(posX).get(posY);
+                
+        if(actor.getCategoria().equals(Categoria.AGENTE))
+            return true;
+        return false;
+    }
+    
+    public static boolean esPolicia(List<List<Actor>> matriz, 
+            Posicion coordenada){
+                int posX = coordenada.getFila();
+        int posY = coordenada.getColumna();
+        Actor actor = matriz.get(posX).get(posY);
+        
+        if(actor.getCategoria().equals(Categoria.POLICIA))
+            return true;
+        return false;
+    }
+    
     public static int validarCoordenada(List<List<Actor>> matriz, 
             Posicion coordenada){
         try{
@@ -88,27 +110,5 @@ public class Validacion {
                 return false;
         }
         return true;
-    }
-    
-    public static boolean esAgente(List<List<Actor>> matriz, 
-            Posicion coordenada){
-        int posX = coordenada.getFila();
-        int posY = coordenada.getColumna();
-        Actor actor = matriz.get(posX).get(posY);
-                
-        if(actor.getCategoria().equals(Categoria.AGENTE))
-            return true;
-        return false;
-    }
-    
-    public static boolean esPolicia(List<List<Actor>> matriz, 
-            Posicion coordenada){
-                int posX = coordenada.getFila();
-        int posY = coordenada.getColumna();
-        Actor actor = matriz.get(posX).get(posY);
-        
-        if(actor.getCategoria().equals(Categoria.POLICIA))
-            return true;
-        return false;
     }
 }

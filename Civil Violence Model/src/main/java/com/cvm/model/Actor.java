@@ -20,42 +20,86 @@ public class Actor {
     private Posicion posicion;
     private int vision;
     
+    /**
+     *
+     */
     public Actor(){
     }
     
+    /**
+     *
+     * @param categoria
+     */
     public Actor(Categoria categoria){
         this.categoria = categoria;
     }
     
+    /**
+     *
+     * @param movimiento
+     * @param categoria
+     * @param vision
+     */
     public Actor(boolean movimiento, Categoria  categoria, int vision){
         this.movimiento = movimiento;
         this.categoria = categoria;
         this.vision = vision;
     }
 
+    /**
+     *
+     * @param categoria
+     * @param posicion
+     * @param vision
+     */
     public Actor(Categoria  categoria, Posicion posicion, int vision){
         this.categoria = categoria;
         this.posicion = posicion;
         this.vision = vision;
     }
     
+    /**
+     *
+     * @return
+     */
     public Categoria getCategoria() {
         return categoria;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isMovimiento() {
         return movimiento;
     }
     
+    /**
+     *
+     * @return
+     */
     public Posicion getPosicion(){
         return this.posicion;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getVision() {
         return vision;
     }
     
+    /**
+     *
+     * @param columnas
+     * @param filas
+     * @param matriz
+     * @return
+     */
     public boolean moverse(int columnas, int filas, List<List<Actor>> matriz){
+        if(!movimiento)
+            return true;
         ArrayList<Posicion> espacios = 
                 inspeccionar(null, columnas, filas, matriz, posicion);
         
@@ -73,22 +117,47 @@ public class Actor {
         return false;
     }
     
+    /**
+     *
+     * @param categoria
+     */
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
+    /**
+     *
+     * @param movimiento
+     */
     public void setMovimiento(boolean movimiento) {
         this.movimiento = movimiento;
     }
     
+    /**
+     *
+     * @param posicion
+     */
     public void setPosicion(Posicion posicion){
         this.posicion = posicion;
     }
 
+    /**
+     *
+     * @param vision
+     */
     public void setVision(int vision) {
         this.vision = vision;
     }
     
+    /**
+     *
+     * @param categoria
+     * @param columnas
+     * @param filas
+     * @param matriz
+     * @param posicion
+     * @return
+     */
     public ArrayList<Posicion> inspeccionar(Categoria categoria, int columnas,
             int filas, List<List<Actor>> matriz, Posicion posicion){
         int posX = posicion.getFila();

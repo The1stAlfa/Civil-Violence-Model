@@ -59,6 +59,12 @@ public class Cvm {
         }
     }
     
+    public static int maximoVision(int columnas, int filas){
+        if(columnas >= filas)
+            return columnas;
+        return filas;
+    }
+    
     public static Object[] solicitarParametrosDeSimulacion(){
         Object[] parametros = new Object[10];
         System.out.println("Para iniciar la simulacion");
@@ -68,16 +74,16 @@ public class Cvm {
 	} catch (InterruptedException e) {
         	e.printStackTrace();}
         System.out.println("*** Tamaño de Universo ***");
-        System.out.println("Ingrese valores entre 3 y 500");
+        System.out.println("Ingrese valores entre 3 y 26");
         do{
             System.out.print("Filas: ");
             parametros[0] = consola.nextLine();
-        }while(!Validacion.validarIngresoEntero((String) parametros[0], 3, 500));
-        System.out.println("Ingrese valores entre 3 y 500");    
+        }while(!Validacion.validarIngresoEntero((String) parametros[0], 3, 26));
+        System.out.println("Ingrese valores entre 3 y 75");    
         do{
             System.out.print("Columnas: ");
             parametros[1] = consola.nextLine();
-        }while(!Validacion.validarIngresoEntero((String) parametros[1], 3, 500));
+        }while(!Validacion.validarIngresoEntero((String) parametros[1], 3, 75));
         System.out.println("\nEncender movimiento 1 o 0 para apagarlo");
         do{
             System.out.print("Movimiento: ");
@@ -90,15 +96,16 @@ public class Cvm {
             do{
                 System.out.print("Densidad de Agentes %: ");
                 parametros[2] = consola.nextLine();
-            }while(!Validacion.validarIngresoEntero((String) parametros[2], 0, 100));
+            }while(!Validacion
+                    .validarIngresoEntero((String) parametros[2], 0, 99));
             System.out.println("\nIngrese valores entre 0 y 99"
-                        + "\nLa suma de las densidades entre Agente y Policia no "
-                        + "debe sobrepasar el 99%");
+                        + "\nLa suma de las densidades entre Agente y Policia"
+                        + " no debe sobrepasar el 99%");
             do{
                 System.out.print("Densidad de Policias %: ");
                 parametros[3] = consola.nextLine();
             }while(!Validacion
-                    .validarIngresoEntero((String) parametros[3], 0, 100));
+                    .validarIngresoEntero((String) parametros[3], 0, 99));
         }while(conversionEntero(parametros[2]) 
                 + conversionEntero(parametros[3]) > 99);    
         do{
@@ -107,7 +114,10 @@ public class Cvm {
             do{    
                 System.out.print("Vision de Agentes: ");
                 parametros[4] = consola.nextLine();
-            }while(!Validacion.validarIngresoEntero((String) parametros[4], 1, 100));
+            }while(!Validacion
+                    .validarIngresoEntero((String) parametros[4], 1, 
+                            maximoVision(conversionEntero(parametros[1]), 
+                                    conversionEntero(parametros[0]))));
             System.out.println("\nIngrese valores entre 0 y como maximo el "
                         + "tamanio de la matriz");
             System.out.println("La vision del Policia debe ser diferente "
@@ -115,8 +125,12 @@ public class Cvm {
             do{    
                 System.out.print("Vision de Policias: ");
                 parametros[5] = consola.nextLine();
-            }while(!Validacion.validarIngresoEntero((String) parametros[5], 1, 100));
-        }while(conversionEntero(parametros[4]) == conversionEntero(parametros[5]));
+            }while(!Validacion
+                    .validarIngresoEntero((String) parametros[5], 1, 
+                            maximoVision(conversionEntero(parametros[1]), 
+                                    conversionEntero(parametros[0]))));
+        }while(conversionEntero(
+                parametros[4]) == conversionEntero(parametros[5]));
         System.out.println("\nIngrese valores entre 0 y 1");
         do{
             System.out.print("Legitimidad del Gobierno: ");

@@ -37,7 +37,8 @@ public class Policia extends Actor{
         }
     }
     
-    public void arrestarAgente(Agente agente, int maxTurnoPrision, Prision prision){
+    public void arrestarAgente(Agente agente, int maxTurnoPrision, 
+            Prision prision){
         int condena = Aleatorio.enteroAleatorio(1, maxTurnoPrision);
         prision.colocarPrisionero(agente, condena);
     } 
@@ -57,7 +58,8 @@ public class Policia extends Actor{
         return agentesActivos;
     }
     
-    private void liberarEspacioEnMatriz(Posicion posicion, List<List<Actor>> matriz){
+    private void liberarEspacioEnMatriz(Posicion posicion, 
+            List<List<Actor>> matriz){
         int posX = posicion.getFila();
         int posY = posicion.getColumna();
         

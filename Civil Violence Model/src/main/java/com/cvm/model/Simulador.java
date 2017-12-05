@@ -70,11 +70,17 @@ public class Simulador {
             System.out.println("  Matriz UNIVERSO inicial\n");
             imprimirInformacion();
             universo.imprimirMatriz(tamanioUniverso[1], tamanioUniverso[0]);
-            System.out.print("\nPresione Enter para continuar...");
+            System.out.print("Presione Enter para continuar...");
             consola.nextLine();
             Cvm.limpiarPantalla();
             System.out.println("*** CIVIL VIOLENCE MODEL ***");
             System.out.println("          SIMULADOR        \n");
+            data = "Turno;Agentes Activos;Agentes Inactivos;En Prision";
+            try {
+                Archivo.grabar(ruta, data);
+            } catch (IOException ex) {
+                Logger.getLogger(Simulador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         this.turno += 1;
         prision.actualizarTurnoEnPrision();
@@ -92,11 +98,11 @@ public class Simulador {
                     universo.getMatriz(), maxTurnosPrision, prision);
         imprimirInformacion();
         universo.imprimirMatriz(tamanioUniverso[1], tamanioUniverso[0]);
-        System.out.print("\nPresione Enter para continuar...");
+        System.out.print("Presione Enter para continuar...");
         consola.nextLine();
         data = String.valueOf(turno) + ";" +
-                String.valueOf(universo.cantidadAgentes(Estado.ACTIVO)) + ";" +
-                String.valueOf(universo.cantidadAgentes(Estado.INACTIVO)) + ";" 
+                String.valueOf(universo.cantidadAgentes(Estado.INACTIVO)) + ";"
+                + String.valueOf(universo.cantidadAgentes(Estado.ACTIVO)) + ";"  
                 + String.valueOf(prision.cantidadPrisioneros());
         try {
             Archivo.grabar(ruta, data);
@@ -151,7 +157,7 @@ public class Simulador {
     
     public void imprimirInformacion(){
         if(turno != 0)
-            System.out.println("Turno: "+ this.turno + "\n");
+            System.out.println("Turno: "+ this.turno);
         System.out.println("** Agentes  ** \n" + 
                 "Densidad: " + this.densidadAgentes + 
                 " Vision: " + this.visionAgentes + 
@@ -166,7 +172,7 @@ public class Simulador {
                 " Vision: " + this.visionPolicias + 
                 "  -Cantidad- " + 
                         "Matriz: " + universo.cantidadPolicias() +" \n" + 
-                "Legitimidad del Gobierno: " + this.legitimidad + "\n");
+                "Legitimidad del Gobierno: " + this.legitimidad);
     }
     
     public void inicializarUniverso(){
@@ -177,7 +183,7 @@ public class Simulador {
         universo = new Universo(columnas, filas, 
                 obtenerAgentes(this.densidadAgentes, this.movimiento, tamanio, 
                         this.visionAgentes), 
-                obtenerPolicias(this.densidadPolicias, this.movimiento, tamanio, 
+                obtenerPolicias(this.densidadPolicias, true, tamanio, 
                         this.visionPolicias));
         universo.inicializarMatriz(columnas, filas);
         universo.colocarAgentes(columnas-1, filas-1, universo.getMatriz(), 

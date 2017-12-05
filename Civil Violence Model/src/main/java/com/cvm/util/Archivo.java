@@ -29,13 +29,17 @@ public class Archivo {
             return true;
         } 
         else {
-            if(archivo.createNewFile()){
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(data);
-                bw.newLine();
-                bw.close();
-                return true;
-            }// El fichero no existe y hay que crearlo
+            try{
+                if(archivo.createNewFile()){
+                    bw = new BufferedWriter(new FileWriter(archivo));
+                    bw.write(data);
+                    bw.newLine();
+                    bw.close();
+                    return true;
+                }// El fichero no existe y hay que crearlo
+            }catch(Exception e){
+                System.out.println("Error al crear archivo");
+            }
         }
         return false;
     }
