@@ -8,6 +8,7 @@ package com.cvm.util;
 import com.cvm.model.Actor;
 import com.cvm.model.Agente;
 import com.cvm.model.Categoria;
+import com.cvm.model.Estado;
 import com.cvm.model.Posicion;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,16 @@ import java.util.List;
  */
 public class Validacion {
     
-    public static boolean esAgente(List<List<Actor>> matriz, 
+    public static boolean esAgenteActivo(List<List<Actor>> matriz, 
             Posicion coordenada){
         int posX = coordenada.getFila();
         int posY = coordenada.getColumna();
         Actor actor = matriz.get(posX).get(posY);
                 
-        if(actor.getCategoria().equals(Categoria.AGENTE))
-            return true;
+        if(actor.getCategoria().equals(Categoria.AGENTE)){
+            if(((Agente)actor).getEstado().equals(Estado.ACTIVO))
+                return true;
+        }
         return false;
     }
     

@@ -63,7 +63,8 @@ public class Agente extends Actor{
                 filas, matriz, this.getPosicion()).size();
         double numeroPolicias = (double) inspeccionar(Categoria.POLICIA, columnas,
                 filas, matriz, this.getPosicion()).size();
-        
+        if(numeroAgentes == 0)
+            numeroAgentes++;
         return numeroPolicias / numeroAgentes;
     }
     

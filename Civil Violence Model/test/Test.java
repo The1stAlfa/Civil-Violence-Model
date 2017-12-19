@@ -169,7 +169,7 @@ public class Test {
                 Posicion posicion = new Posicion(j, i);
                 if(Categoria.AGENTE.equals(categoria)){
                     if(Validacion.validarCoordenada(matriz, posicion) == 0){
-                        if(Validacion.esAgente(matriz,posicion) && 
+                        if(Validacion.esAgenteActivo(matriz,posicion) && 
                                 Validacion.validarPosicion(posiciones, posicion))
                             posiciones.add(posicion);
                     }
@@ -203,7 +203,7 @@ public class Test {
                 Posicion posicion = new Posicion(j, i);
                 if(Categoria.AGENTE.equals(categoria)){
                     if(Validacion.validarCoordenada(matriz, posicion) == 0){
-                        if(Validacion.esAgente(matriz,posicion) && 
+                        if(Validacion.esAgenteActivo(matriz,posicion) && 
                                 Validacion.validarPosicion(posiciones, posicion))
                             posiciones.add(posicion);
                     }
@@ -237,7 +237,7 @@ public class Test {
                 Posicion posicion = new Posicion(j, i);
                 if(Categoria.AGENTE.equals(categoria)){
                     if(Validacion.validarCoordenada(matriz, posicion) == 0){
-                        if(Validacion.esAgente(matriz,posicion) && 
+                        if(Validacion.esAgenteActivo(matriz,posicion) && 
                                 Validacion.validarPosicion(posiciones, posicion))
                             posiciones.add(posicion);
                     }
@@ -271,7 +271,7 @@ public class Test {
                 Posicion posicion = new Posicion(j, i);
                 if(Categoria.AGENTE.equals(categoria)){
                     if(Validacion.validarCoordenada(matriz, posicion) == 0){
-                        if(Validacion.esAgente(matriz,posicion) && 
+                        if(Validacion.esAgenteActivo(matriz,posicion) && 
                                 Validacion.validarPosicion(posiciones, posicion))
                             posiciones.add(posicion);
                     }
